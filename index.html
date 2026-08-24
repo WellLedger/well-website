@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WELL 记账本 · 安卓下载</title>
+<meta name="description" content="WELL 记账本安卓版官方下载。每一笔，都为更好的生活。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+<style>
+    :root{
+        --bg:#FFFFFF;
+        --ink:#111111;
+        --ink-soft:#666666;
+        --ink-light:#999999;
+        --line:#E5E5E5;
+        --surface:#F7F7F7;
+        /* WELL 品牌主色，仅用于 logo 与装饰 */
+        --primary:#4F9BFA;
+        --primary-bg:rgba(79,155,250,0.10);
+        --primary-shadow:rgba(79,155,250,0.22);
+        --sans:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+        font-family:var(--sans);
+        color:var(--ink);background:var(--bg);
+        min-height:100vh;
+        -webkit-font-smoothing:antialiased;
+        text-rendering:optimizeLegibility;
+    }
+    a{text-decoration:none;color:inherit;}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+
+    /* ===== 顶部导航 ===== */
+    .nav{
+        display:flex;align-items:center;justify-content:space-between;
+        padding:28px 0 12px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;}
+    .brand-name{font-weight:700;letter-spacing:2.5px;font-size:16px;}
+
+    /* ===== 主区 ===== */
+    .hero{
+        display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+        padding:56px 0 90px;
+    }
+    .hero-text{max-width:480px;}
+    .pill{
+        display:inline-flex;align-items:center;gap:8px;
+        font-size:13px;color:var(--ink-soft);letter-spacing:1px;
+        border:1px solid var(--line);border-radius:999px;
+        padding:7px 16px;margin-bottom:26px;
+    }
+    .pill i{font-size:15px;}
+    .title{
+        font-size:clamp(56px,8vw,96px);
+        line-height:1.05;font-weight:700;letter-spacing:2px;
+        color:var(--primary);margin-bottom:18px;
+    }
+    .sub{
+        font-size:clamp(16px,1.8vw,20px);
+        color:var(--ink-soft);line-height:1.8;letter-spacing:.5px;
+        margin-bottom:38px;
+    }
+
+    .dl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
+    .btn{
+        display:flex;align-items:center;
+        font-size:15px;font-weight:500;letter-spacing:.5px;
+        padding:13px 26px;border-radius:10px;
+        transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn i{font-size:18px;}
+    .btn-primary{
+        background:#fff;color:var(--ink);border:1px solid var(--line);
+    }
+    .meta{
+        display:flex;align-items:center;gap:18px;
+        font-size:13px;color:var(--ink-light);letter-spacing:.3px;
+    }
+    .meta span{position:relative;}
+    .meta span:not(:last-child)::after{
+        content:"";position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+        width:3px;height:3px;border-radius:50%;background:var(--ink-light);opacity:.6;
+    }
+
+    /* ===== 手机样机 + 装饰 ===== */
+    .phone-stage{
+        position:relative;display:flex;justify-content:center;align-items:center;
+        min-height:min(620px,168vw);
+    }
+    .deco{
+        position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0;
+    }
+    .deco-1{
+        width:260px;height:260px;background:var(--primary-bg);
+        top:6%;right:8%;
+    }
+    .deco-2{
+        width:180px;height:180px;background:rgba(79,155,250,0.06);
+        bottom:18%;left:12%;
+    }
+    .phone{
+        position:relative;z-index:2;
+        width:min(280px,75vw);
+        height:min(575px,154vw);
+        border-radius:48px;
+        background:linear-gradient(150deg,#43434a 0%,#1c1c1f 50%,#2b2b2e 100%);
+        padding:11px;
+        box-shadow:
+            0 2px 5px rgba(0,0,0,.22),
+            0 46px 84px rgba(17,17,17,.18),
+            inset 0 0 0 2px rgba(255,255,255,.07);
+    }
+    .phone::before{
+        content:"";position:absolute;inset:0;border-radius:48px;pointer-events:none;
+        background:linear-gradient(150deg,rgba(255,255,255,.20),rgba(255,255,255,0) 32%);
+    }
+    .btn-vol,.btn-pwr{position:absolute;background:linear-gradient(#2d2d30,#19191b);border-radius:3px;}
+    .btn-vol{left:-3px;top:128px;width:3px;height:58px;}
+    .btn-pwr{right:-3px;top:150px;width:3px;height:88px;}
+    .screen{
+        position:relative;width:100%;height:100%;
+        border-radius:38px;overflow:hidden;background:#0c0c0e;
+    }
+    .screen::after{
+        content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+        background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,0) 42%);
+    }
+    .island{
+        position:absolute;top:11px;left:50%;transform:translateX(-50%);
+        width:92px;height:26px;background:#000;border-radius:99px;z-index:5;
+    }
+    .shot{
+        position:absolute;inset:0;z-index:1;
+        width:100%;height:100%;object-fit:cover;display:block;background:#e9e4db;
+    }
+    .shot-ph{
+        position:absolute;inset:0;z-index:0;
+        display:flex;flex-direction:column;gap:8px;
+        align-items:center;justify-content:center;
+        color:#a8a8a8;font-size:12px;text-align:center;line-height:1.7;padding:0 24px;
+        background:var(--surface);letter-spacing:1px;
+    }
+    .home-ind{
+        position:absolute;bottom:9px;left:50%;transform:translateX(-50%);
+        width:118px;height:5px;border-radius:99px;
+        background:rgba(255,255,255,.5);z-index:5;
+    }
+
+    /* ===== 页脚 ===== */
+    .foot{
+        text-align:center;padding:30px 0 46px;
+        font-size:12px;color:var(--ink-light);letter-spacing:.5px;
+        border-top:1px solid var(--line);
+    }
+
+    /* ===== 入场动画 ===== */
+    .reveal{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards;}
+    .d1{animation-delay:.06s;} .d2{animation-delay:.12s;} .d3{animation-delay:.18s;} .d4{animation-delay:.24s;}
+    @keyframes rise{to{opacity:1;transform:none;}}
+    @media (prefers-reduced-motion:reduce){
+        .reveal{animation:none;opacity:1;transform:none;}
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width:1024px){
+        .hero{gap:44px;padding:44px 0 72px;}
+    }
+    @media (max-width:860px){
+        .wrap{padding:0 24px;}
+        .hero{grid-template-columns:1fr;gap:42px;padding:32px 0 56px;text-align:center;}
+        .hero-text{max-width:none;}
+        .pill{margin-left:auto;margin-right:auto;}
+        .dl,.meta{justify-content:center;}
+        .phone-stage{min-height:min(540px,158vw);}
+        .deco-1{right:0;top:0;}
+        .deco-2{left:0;}
+    }
+</style>
+</head>
+<body>
+    <div class="wrap">
+        <!-- 导航 -->
+        <header class="nav">
+            <div class="brand">
+                <span class="brand-name">WELL</span>
+            </div>
+        </header>
+
+        <!-- 主区 -->
+        <main class="hero">
+            <div class="hero-text">
+                <div class="pill reveal">
+                    <i class="ri-quill-pen-line"></i>
+                    <span>每一笔，都为更好的生活</span>
+                </div>
+                <h1 class="title reveal d1">WELL</h1>
+                <p class="sub reveal d2">在记录中，找到生活的从容。</p>
+
+                <div class="dl reveal d3">
+                    <a class="btn btn-primary" href="well-android-v1.0.0.apk"><i class="ri-android-line"></i>安卓下载</a>
+                </div>
+
+                <div class="meta reveal d4">
+                    <span>v1.0.0</span>
+                    <span>18.6 MB</span>
+                    <span>Android 7.0+</span>
+                </div>
+            </div>
+
+            <!-- 手机样机（保留外壳，产品用图片） -->
+            <div class="phone-stage reveal d3">
+                <span class="deco deco-1"></span>
+                <span class="deco deco-2"></span>
+                <div class="phone">
+                    <span class="btn-vol"></span>
+                    <span class="btn-pwr"></span>
+                    <div class="screen">
+                        <div class="island"></div>
+                        <div class="shot-ph">在此放入产品截图<br>替换 product.png</div>
+                        <img class="shot" src="product.png" alt="WELL App 截图" onerror="this.remove();" />
+                        <div class="home-ind"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="foot">© 2026 WELL · 每一笔，都为更好的生活</footer>
+    </div>
+
+    <script>
+        /* 主题跟随：若站点已保存主题色则应用，保证 logo 装饰色一致 */
+        (function () {
+            try {
+                var c = localStorage.getItem('well_theme_color');
+                if (c) {
+                    var r = document.documentElement.style;
+                    r.setProperty('--primary', c);
+                    r.setProperty('--primary-bg', c + '1a');
+                    r.setProperty('--primary-shadow', c + '38');
+                }
+            } catch (e) {}
+        })();
+    </script>
+</body>
+</html>
