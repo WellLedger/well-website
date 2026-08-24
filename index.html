@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>WELL 记账本 · 安卓下载</title>
 <meta name="description" content="WELL 记账本安卓版官方下载。每一笔，都为更好的生活。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,6 +35,7 @@
         min-height:100vh;
         -webkit-font-smoothing:antialiased;
         text-rendering:optimizeLegibility;
+        overflow-x:hidden;
     }
     a{text-decoration:none;color:inherit;}
 
@@ -48,7 +49,7 @@
     .brand{display:flex;align-items:center;}
     .brand-name{font-weight:600;letter-spacing:2.5px;font-size:19px;}
     .brand-tag{
-        font-size:11px;letter-spacing:1.5px;color:#fff;
+        font-size:9px;letter-spacing:1.5px;color:#fff;
         background:var(--primary);border-radius: 360px 360px 360px 0;
         padding:3px 9px;margin-left:14px;font-weight:400;white-space:nowrap;
     }
@@ -114,15 +115,27 @@
     .features b{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:.2px;}
     .features span{font-size:13px;color:var(--ink-light);line-height:1.55;letter-spacing:.1px;}
 
-    /* ===== 手机样机（干净，无发光装饰） ===== */
+    /* ===== 手机样机轮播（堆叠 + 滑动切换） ===== */
     .phone-stage{
-        position:relative;display:flex;justify-content:flex-end;align-items:center;
-        min-height:min(620px,165vw);
+        position:relative;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        min-height:min(720px,200vw);
+        perspective:1400px;
+    }
+    .carousel{
+        position:relative;
+        width:min(320px,82vw);
+        height:min(582px,156vw);
     }
     .phone{
-        position:relative;z-index:2;
+        position:absolute;left:50%;top:50%;
         width:min(284px,76vw);
         height:min(582px,156vw);
+        margin-left:calc(min(284px,76vw) / -2);
+        margin-top:calc(min(582px,156vw) / -2);
+        transform-origin:center center;
+        transition:transform .55s cubic-bezier(.2,.7,.2,1), opacity .45s ease;
+        will-change:transform,opacity;
         border-radius:50px;
         background:linear-gradient(150deg,#4a4a52 0%,#1b1b1f 52%,#2c2c30 100%);
         padding:11px;
@@ -166,6 +179,20 @@
         width:118px;height:5px;border-radius:99px;
         background:rgba(255,255,255,.5);z-index:5;
     }
+    /* 样机占位图标签 + 彩色色调（对应不同功能屏） */
+    .ph-tag{
+        display:inline-block;font-size:13px;font-weight:600;letter-spacing:.6px;
+        color:var(--primary);background:rgba(79,155,250,0.14);
+        padding:6px 16px;border-radius:999px;margin-bottom:4px;
+    }
+    .shot-ph.tone{background:linear-gradient(160deg,#f2f8ff,#e7f1ff);}
+    .shot-ph.tone-2{background:linear-gradient(160deg,#f1fbf0,#e6f6e9);}
+    .shot-ph.tone-2 .ph-tag{color:#37a86a;background:rgba(55,168,106,0.14);}
+    .shot-ph.tone-3{background:linear-gradient(160deg,#fff2f7,#ffe7f1);}
+    .shot-ph.tone-3 .ph-tag{color:#df6c97;background:rgba(223,108,151,0.14);}
+
+    /* 桌面端：手机可点击展开，给出指针提示 */
+    .phone{cursor:pointer;}
 
     /* ===== 页脚 ===== */
     .foot{
@@ -201,7 +228,17 @@
         }
         .features li{flex:none;}
         .features i{margin-bottom:8px;}
-        .phone-stage{justify-content:center;min-height:min(560px,160vw);}
+        .phone-stage{justify-content:center;min-height:min(560px,168vw);}
+        /* 移动端：中间样机进一步加大，两侧紧贴成堆叠感、仅露一小条；摄像头缩小 */
+        .phone{
+            width:min(280px,76vw);
+            height:min(572px,156vw);
+            margin-left:calc(min(280px,76vw) / -2);
+            margin-top:calc(min(572px,156vw) / -2);
+        }
+        .island{width:78px;height:22px;top:9px;}
+        /* 移动端：轮播容器铺满宽度，仅裁掉屏幕外缘，中间手机与两侧不再重叠遮挡 */
+        .carousel{overflow:hidden;width:100vw;max-width:460px;}
     }
 </style>
 </head>
@@ -271,16 +308,53 @@
                 </ul>
             </div>
 
-            <!-- 手机样机（保留外壳，产品用图片） -->
+            <!-- 手机样机轮播：多图堆叠 + 滑动切换 -->
             <div class="phone-stage reveal d3">
-                <div class="phone">
-                    <span class="btn-vol"></span>
-                    <span class="btn-pwr"></span>
-                    <div class="screen">
-                        <div class="island"></div>
-                        <div class="shot-ph">在此放入产品截图<br>替换 product.png</div>
-                        <img class="shot" src="product.png" alt="WELL App 截图" onerror="this.remove();" />
-                        <div class="home-ind"></div>
+                <div class="carousel" id="carousel">
+                    <div class="phone">
+                        <span class="btn-vol"></span>
+                        <span class="btn-pwr"></span>
+                        <div class="screen">
+                            <div class="island"></div>
+                            <div class="shot-ph">在此放入产品截图<br>替换 product.png</div>
+                            <img class="shot" src="product.png" alt="WELL App 截图" onerror="this.remove();" />
+                            <div class="home-ind"></div>
+                        </div>
+                    </div>
+                    <div class="phone">
+                        <span class="btn-vol"></span>
+                        <span class="btn-pwr"></span>
+                        <div class="screen">
+                            <div class="island"></div>
+                            <div class="shot-ph tone">
+                             <img class="shot" src="product01.png" alt="WELL App 截图" onerror="this.remove();" />
+                            </div>
+                            <div class="home-ind"></div>
+                        </div>
+                    </div>
+                    <div class="phone">
+                        <span class="btn-vol"></span>
+                        <span class="btn-pwr"></span>
+                        <div class="screen">
+                            <div class="island"></div>
+                            <div class="shot-ph tone tone-2">
+                                <img class="shot" src="product02.png" alt="WELL App 截图" onerror="this.remove();" />
+
+                            </div>
+                            <div class="home-ind"></div>
+                        </div>
+                    </div>
+                    <div class="phone">
+                        <span class="btn-vol"></span>
+                        <span class="btn-pwr"></span>
+                        <div class="screen">
+                            <div class="island"></div>
+                            <div class="shot-ph tone tone-3">
+                                <img class="shot" src="product03.png" alt="WELL App 截图" onerror="this.remove();" />
+
+                            </div>
+                            <div class="home-ind"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -357,6 +431,144 @@
                 } catch (e) {}
             };
             xhr.send();
+        })();
+
+        /* 手机样机轮播：堆叠 + 滑动切换 */
+        (function () {
+            var carousel = document.getElementById('carousel');
+            if (!carousel) return;
+            var phones = Array.prototype.slice.call(carousel.querySelectorAll('.phone'));
+            var n = phones.length;
+            if (!n) return;
+            var current = 0;
+            var expanded = false; // 桌面端：是否展开为四宫格
+            var mq = window.matchMedia('(max-width:860px)');
+
+            /* 桌面端折叠：堆叠（最前一台 + 后两台微露） */
+            function renderStack() {
+                for (var i = 0; i < n; i++) {
+                    var depth = (i - current + n) % n; // 0=最前，1、2=向后堆叠
+                    var p = phones[i];
+                    if (depth === 0) {
+                        p.style.transform = 'translate(0,0) scale(1)';
+                        p.style.opacity = '1';
+                        p.style.zIndex = '100';
+                        p.style.pointerEvents = 'auto';
+                    } else if (depth <= 2) {
+                        var tx = depth * 16;
+                        var ty = -depth * 20;
+                        var sc = 1 - depth * 0.06;
+                        p.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+                        p.style.opacity = String(1 - depth * 0.28);
+                        p.style.zIndex = String(100 - depth * 10);
+                        p.style.pointerEvents = 'none';
+                    } else {
+                        p.style.transform = 'translate(40px,-50px) scale(0.8)';
+                        p.style.opacity = '0';
+                        p.style.zIndex = '10';
+                        p.style.pointerEvents = 'none';
+                    }
+                }
+            }
+
+            /* 桌面端展开：四台手机排成 2×2 网格（缩放后居中） */
+            function renderGrid() {
+                var cells = [[-83, -158], [83, -158], [-83, 158], [83, 158]];
+                var s = 0.528;
+                for (var i = 0; i < n; i++) {
+                    var c = cells[i] || [0, 0];
+                    phones[i].style.transform = 'translate(' + c[0] + 'px,' + c[1] + 'px) scale(' + s + ')';
+                    phones[i].style.opacity = '1';
+                    phones[i].style.zIndex = String(10 + i);
+                    phones[i].style.pointerEvents = 'auto';
+                }
+            }
+
+            /* 移动端：中间大、两侧紧贴堆叠各露约一半（不重叠遮挡），滑动切换 */
+            function renderMobile() {
+                var cw = carousel.offsetWidth || 320;   // 移动端轮播容器宽度（铺满屏）
+                var pw = phones[0].offsetWidth || 240;
+                var cScale = 1;       // 当前手机保持原尺寸（中间最大）
+                var sScale = 0.5;     // 两侧手机更小
+                var shift = pw * 0.36; // 两侧中心紧压在中间手机后，仅外侧露出一小条
+                for (var i = 0; i < n; i++) {
+                    var off = i - current;
+                    if (off > n / 2) off -= n;
+                    if (off < -n / 2) off += n;
+                    var a = Math.abs(off);
+                    var p = phones[i];
+                    if (a === 0) {
+                        p.style.transform = 'translate(0,0) scale(' + cScale + ')';
+                        p.style.opacity = '1';
+                        p.style.zIndex = '100';
+                        p.style.pointerEvents = 'auto';
+                    } else if (a === 1) {
+                        p.style.transform = 'translate(' + (off * shift) + 'px,0) scale(' + sScale + ')';
+                        p.style.opacity = '0.92';
+                        p.style.zIndex = '90';
+                        p.style.pointerEvents = 'none';
+                    } else {
+                        p.style.transform = 'translate(' + (off * shift) + 'px,0) scale(' + sScale + ')';
+                        p.style.opacity = '0';
+                        p.style.zIndex = '10';
+                        p.style.pointerEvents = 'none';
+                    }
+                }
+            }
+
+            function render() {
+                if (mq.matches) renderMobile();
+                else if (expanded) renderGrid();
+                else renderStack();
+            }
+
+            function go(idx) {
+                current = (idx % n + n) % n;
+                render();
+            }
+
+            /* 桌面端：未展开时点击展开为四宫格；展开后点击某台手机则将其设为最前并叠起 */
+            carousel.addEventListener('click', function (e) {
+                if (mq.matches) return; // 移动端不响应点击
+                if (!expanded) {
+                    expanded = true; // 展开为四宫格
+                    render();
+                } else {
+                    var ph = e.target.closest && e.target.closest('.phone');
+                    if (ph) {
+                        var idx = phones.indexOf(ph);
+                        if (idx > -1) current = idx; // 点击的手机置为最前
+                    }
+                    expanded = false; // 叠起来并展示对应产品图
+                    render();
+                }
+            });
+
+            /* 滑动 / 拖拽：仅移动端用于切换浏览 */
+            var startX = null;
+            var dragging = false;
+            function down(x) { startX = x; dragging = true; }
+            function up(x) {
+                if (!dragging || startX === null) return;
+                var dx = x - startX;
+                if (mq.matches && Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
+                dragging = false; startX = null;
+            }
+            carousel.addEventListener('touchstart', function (e) { down(e.touches[0].clientX); }, { passive: true });
+            carousel.addEventListener('touchend', function (e) { up(e.changedTouches[0].clientX); });
+            carousel.addEventListener('mousedown', function (e) {
+                down(e.clientX);
+                if (mq.matches) e.preventDefault(); // 移动端避免拖出图片残影
+            });
+            window.addEventListener('mouseup', function (e) { if (dragging) up(e.clientX); });
+
+            /* 视口变化时回到合适状态并重排（移动端取消展开） */
+            window.addEventListener('resize', function () {
+                if (mq.matches) expanded = false;
+                render();
+            });
+
+            render();
         })();
     </script>
 </body>
