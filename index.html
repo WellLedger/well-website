@@ -237,8 +237,8 @@
             margin-top:calc(min(572px,156vw) / -2);
         }
         .island{width:78px;height:22px;top:9px;}
-        /* 移动端：轮播容器铺满宽度，仅裁掉屏幕外缘，中间手机与两侧不再重叠遮挡 */
-        .carousel{overflow:hidden;width:100vw;max-width:460px;}
+        /* 移动端：轮播容器占满版心（不用 100vw，避免滚动条导致整块向右偏移），两侧手机由 overflow:hidden 裁切 */
+        .carousel{overflow:hidden;width:100%;max-width:460px;}
     }
 </style>
 </head>
