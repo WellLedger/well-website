@@ -7,131 +7,144 @@
 <meta name="description" content="WELL 记账本安卓版官方下载。每一笔，都为更好的生活。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
 <style>
     :root{
         --bg:#FFFFFF;
-        --ink:#111111;
-        --ink-soft:#666666;
-        --ink-light:#999999;
-        --line:#E5E5E5;
-        --surface:#F7F7F7;
-        /* WELL 品牌主色，仅用于 logo 与装饰 */
+        --ink:#1D1D1F;
+        --ink-soft:#6E6E73;
+        --ink-light:#86868B;
+        --line:rgba(0,0,0,0.10);
         --primary:#4F9BFA;
-        --primary-bg:rgba(79,155,250,0.10);
-        --primary-shadow:rgba(79,155,250,0.22);
-        --sans:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+        --primary-2:#3E8BE8;
+        --sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue','PingFang SC',sans-serif;
     }
 
     *{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{
         font-family:var(--sans);
-        color:var(--ink);background:var(--bg);
+        color:var(--ink);
+        /* 背景淡蓝色点缀：柔和的品牌蓝晕染，置于底层 */
+        background:
+            radial-gradient(820px 560px at 88% -8%, rgba(79,155,250,0.12), transparent 62%),
+            radial-gradient(680px 520px at 2% 108%, rgba(79,155,250,0.10), transparent 60%),
+            radial-gradient(520px 380px at 60% 40%, rgba(79,155,250,0.06), transparent 64%),
+            var(--bg);
         min-height:100vh;
         -webkit-font-smoothing:antialiased;
         text-rendering:optimizeLegibility;
     }
     a{text-decoration:none;color:inherit;}
 
-    .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 40px;}
 
     /* ===== 顶部导航 ===== */
     .nav{
         display:flex;align-items:center;justify-content:space-between;
-        padding:28px 0 12px;
+        padding:30px 0;
     }
-    .brand{display:flex;align-items:center;gap:10px;}
-    .brand-name{font-weight:700;letter-spacing:2.5px;font-size:16px;}
+    .brand{display:flex;align-items:center;}
+    .brand-name{font-weight:600;letter-spacing:2.5px;font-size:19px;}
+    .brand-tag{
+        font-size:11px;letter-spacing:1.5px;color:#fff;
+        background:var(--primary);border-radius: 360px 360px 360px 0;
+        padding:3px 9px;margin-left:14px;font-weight:400;white-space:nowrap;
+    }
+    .nav-right{display:flex;align-items:center;gap:26px;}
+    .nav-link{
+        font-size:14px;color:var(--ink-soft);letter-spacing:.3px;
+        display:inline-flex;align-items:center;gap:7px;transition:color .2s ease;
+    }
+    .nav-link:hover{color:var(--ink);}
 
     /* ===== 主区 ===== */
     .hero{
-        display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
-        padding:56px 0 90px;
+        display:grid;grid-template-columns:1.3fr 0.7fr;gap:90px;align-items:center;
+        padding:120px 0 140px;
     }
-    .hero-text{max-width:480px;}
-    .pill{
-        display:inline-flex;align-items:center;gap:8px;
-        font-size:13px;color:var(--ink-soft);letter-spacing:1px;
-        border:1px solid var(--line);border-radius:999px;
-        padding:7px 16px;margin-bottom:26px;
-    }
-    .pill i{font-size:15px;}
-    .title{
-        font-size:clamp(56px,8vw,96px);
-        line-height:1.05;font-weight:700;letter-spacing:2px;
-        color:var(--primary);margin-bottom:18px;
-    }
-    .sub{
-        font-size:clamp(16px,1.8vw,20px);
-        color:var(--ink-soft);line-height:1.8;letter-spacing:.5px;
-        margin-bottom:38px;
+    .hero-text{max-width:640px;}
+
+    .eyebrow{
+        font-size:14px;color:var(--ink-light);letter-spacing:1.5px;
+        font-weight:500;margin-bottom:20px;
     }
 
-    .dl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
+    .title{
+        font-size:clamp(52px,11vw,88px);
+        line-height:1.0;font-weight:600;letter-spacing:-1px;
+        color:var(--primary);margin-bottom:24px;
+    }
+
+    /* ===== 下载区（无卡片，纯留白） ===== */
+    .dl-row{display:flex;align-items:center;gap:36px;margin-bottom:16px;}
     .btn{
-        display:flex;align-items:center;
-        font-size:15px;font-weight:500;letter-spacing:.5px;
-        padding:13px 26px;border-radius:10px;
-        transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+        display:inline-flex;align-items:center;gap:9px;
+        font-size:15px;font-weight:400;letter-spacing:.4px;
+        padding:13px 30px;border-radius:980px;
+        transition:background .2s ease, transform .2s ease;
     }
     .btn i{font-size:18px;}
-    .btn-primary{
-        background:#fff;color:var(--ink);border:1px solid var(--line);
+    .btn-primary{background:#fff;color:var(--ink);border:1px solid rgba(0,0,0,.16);}
+    .btn-primary:hover{background:#f5f5f7;border-color:rgba(0,0,0,.28);transform:translateY(-1px);}
+    .btn-primary:active{transform:translateY(0);}
+
+    /* 下载统计：独立成块，不与文件大小并列 */
+    .dl-stat{display:flex;align-items:baseline;gap:8px;}
+    .dl-stat-num{
+        font-size:26px;font-weight:600;color:var(--ink);letter-spacing:.3px;
+        font-variant-numeric:tabular-nums;
     }
-    .meta{
-        display:flex;align-items:center;gap:18px;
+    .dl-stat-label{font-size:13px;color:var(--ink-light);letter-spacing:.5px;}
+
+    /* 规格行：版本 / 大小 / 系统（文件大小单独成行，旁边不放下载量） */
+    .dl-specs{
+        display:flex;align-items:center;gap:10px;flex-wrap:wrap;
         font-size:13px;color:var(--ink-light);letter-spacing:.3px;
     }
-    .meta span{position:relative;}
-    .meta span:not(:last-child)::after{
-        content:"";position:absolute;right:-12px;top:50%;transform:translateY(-50%);
-        width:3px;height:3px;border-radius:50%;background:var(--ink-light);opacity:.6;
-    }
+    .dl-specs .sep{opacity:.5;}
 
-    /* ===== 手机样机 + 装饰 ===== */
+    /* 价值点：无框无底色，细线图标 + 留白（单行排列，不换行） */
+    .features{
+        list-style:none;display:flex;gap:18px;margin-top:58px;
+    }
+    .features li{flex:1 1 0;min-width:0;}
+    .features i{font-size:23px;color:var(--ink-light);display:block;margin-bottom:12px;}
+    .features b{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:.2px;}
+    .features span{font-size:13px;color:var(--ink-light);line-height:1.55;letter-spacing:.1px;}
+
+    /* ===== 手机样机（干净，无发光装饰） ===== */
     .phone-stage{
-        position:relative;display:flex;justify-content:center;align-items:center;
-        min-height:min(620px,168vw);
-    }
-    .deco{
-        position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0;
-    }
-    .deco-1{
-        width:260px;height:260px;background:var(--primary-bg);
-        top:6%;right:8%;
-    }
-    .deco-2{
-        width:180px;height:180px;background:rgba(79,155,250,0.06);
-        bottom:18%;left:12%;
+        position:relative;display:flex;justify-content:flex-end;align-items:center;
+        min-height:min(620px,165vw);
     }
     .phone{
         position:relative;z-index:2;
-        width:min(280px,75vw);
-        height:min(575px,154vw);
-        border-radius:48px;
-        background:linear-gradient(150deg,#43434a 0%,#1c1c1f 50%,#2b2b2e 100%);
+        width:min(284px,76vw);
+        height:min(582px,156vw);
+        border-radius:50px;
+        background:linear-gradient(150deg,#4a4a52 0%,#1b1b1f 52%,#2c2c30 100%);
         padding:11px;
         box-shadow:
-            0 2px 5px rgba(0,0,0,.22),
-            0 46px 84px rgba(17,17,17,.18),
-            inset 0 0 0 2px rgba(255,255,255,.07);
+            0 2px 6px rgba(0,0,0,.16),
+            0 40px 80px -28px rgba(0,0,0,0.30),
+            inset 0 0 0 2px rgba(255,255,255,.08);
     }
     .phone::before{
-        content:"";position:absolute;inset:0;border-radius:48px;pointer-events:none;
-        background:linear-gradient(150deg,rgba(255,255,255,.20),rgba(255,255,255,0) 32%);
+        content:"";position:absolute;inset:0;border-radius:50px;pointer-events:none;z-index:6;
+        background:linear-gradient(150deg,rgba(255,255,255,.18),rgba(255,255,255,0) 34%);
     }
     .btn-vol,.btn-pwr{position:absolute;background:linear-gradient(#2d2d30,#19191b);border-radius:3px;}
     .btn-vol{left:-3px;top:128px;width:3px;height:58px;}
     .btn-pwr{right:-3px;top:150px;width:3px;height:88px;}
     .screen{
         position:relative;width:100%;height:100%;
-        border-radius:38px;overflow:hidden;background:#0c0c0e;
+        border-radius:40px;overflow:hidden;background:#0c0c0e;
     }
     .screen::after{
         content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
-        background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,0) 42%);
+        background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,0) 42%);
     }
     .island{
         position:absolute;top:11px;left:50%;transform:translateX(-50%);
@@ -146,7 +159,7 @@
         display:flex;flex-direction:column;gap:8px;
         align-items:center;justify-content:center;
         color:#a8a8a8;font-size:12px;text-align:center;line-height:1.7;padding:0 24px;
-        background:var(--surface);letter-spacing:1px;
+        background:#fafafa;letter-spacing:1px;
     }
     .home-ind{
         position:absolute;bottom:9px;left:50%;transform:translateX(-50%);
@@ -156,14 +169,14 @@
 
     /* ===== 页脚 ===== */
     .foot{
-        text-align:center;padding:30px 0 46px;
+        text-align:center;padding:34px 0 50px;
         font-size:12px;color:var(--ink-light);letter-spacing:.5px;
         border-top:1px solid var(--line);
     }
 
     /* ===== 入场动画 ===== */
-    .reveal{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards;}
-    .d1{animation-delay:.06s;} .d2{animation-delay:.12s;} .d3{animation-delay:.18s;} .d4{animation-delay:.24s;}
+    .reveal{opacity:0;transform:translateY(16px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards;}
+    .d1{animation-delay:.06s;} .d2{animation-delay:.14s;} .d3{animation-delay:.22s;} .d4{animation-delay:.3s;}
     @keyframes rise{to{opacity:1;transform:none;}}
     @media (prefers-reduced-motion:reduce){
         .reveal{animation:none;opacity:1;transform:none;}
@@ -171,17 +184,24 @@
 
     /* ===== 响应式 ===== */
     @media (max-width:1024px){
-        .hero{gap:44px;padding:44px 0 72px;}
+        .hero{gap:60px;padding:90px 0 110px;}
     }
     @media (max-width:860px){
-        .wrap{padding:0 24px;}
-        .hero{grid-template-columns:1fr;gap:42px;padding:32px 0 56px;text-align:center;}
-        .hero-text{max-width:none;}
-        .pill{margin-left:auto;margin-right:auto;}
-        .dl,.meta{justify-content:center;}
-        .phone-stage{min-height:min(540px,158vw);}
-        .deco-1{right:0;top:0;}
-        .deco-2{left:0;}
+        .wrap{padding:0 26px;}
+        .hero{grid-template-columns:1fr;gap:54px;padding:56px 0 80px;text-align:center;}
+        .hero-text{max-width:none;margin:0 auto;}
+        .dl-row{flex-direction:column;gap:16px;align-items:center;}
+        .dl-specs{justify-content:center;}
+        /* 移动端：features 改为两行两列（2×2）排列 */
+        .features{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:28px 18px;
+            margin-top:44px;
+        }
+        .features li{flex:none;}
+        .features i{margin-bottom:8px;}
+        .phone-stage{justify-content:center;min-height:min(560px,160vw);}
     }
 </style>
 </head>
@@ -191,35 +211,68 @@
         <header class="nav">
             <div class="brand">
                 <span class="brand-name">WELL</span>
+                <span class="brand-tag">官方网站</span>
+            </div>
+            <div class="nav-right">
+                <a class="nav-link" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener"><i class="ri-github-fill"></i>GitHub</a>
             </div>
         </header>
 
         <!-- 主区 -->
         <main class="hero">
             <div class="hero-text">
-                <div class="pill reveal">
-                    <i class="ri-quill-pen-line"></i>
-                    <span>每一笔，都为更好的生活</span>
-                </div>
+                <div class="eyebrow reveal">每一笔，都为更好的生活</div>
                 <h1 class="title reveal d1">WELL</h1>
-                <p class="sub reveal d2">在记录中，找到生活的从容。</p>
 
-                <div class="dl reveal d3">
-                    <a class="btn btn-primary" id="dl-btn" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener"><i class="ri-android-line"></i>安卓下载</a>
+                <!-- 下载区：统计与规格分离 -->
+                <div class="reveal d3">
+                    <div class="dl-row">
+                        <a class="btn btn-primary" id="dl-btn" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener"><i class="ri-android-line"></i>安卓下载</a>
+
+                        <!-- 下载统计：独立区块，不放在文件大小旁边 -->
+                        <div class="dl-stat">
+                            <span class="dl-stat-num" id="dl-count">--</span>
+                            <span class="dl-stat-label">次下载</span>
+                        </div>
+                    </div>
+
+                    <!-- 规格：版本 / 大小 / 系统（文件大小单独成行） -->
+                    <div class="dl-specs">
+                        <span id="dl-version">v1.0.0</span>
+                        <span class="sep">·</span>
+                        <span id="dl-size">-- MB</span>
+                        <span class="sep">·</span>
+                        <span>Android 7.0+</span>
+                    </div>
                 </div>
 
-                <div class="meta reveal d4">
-                    <span id="dl-version">v1.0.0</span>
-                    <span id="dl-size">-- MB</span>
-                    <span id="dl-count"><i class="ri-download-2-line"></i> -- 次下载</span>
-                    <span>Android 7.0+</span>
-                </div>
+                <!-- 价值点：无框无底色 -->
+                <ul class="features reveal d4">
+                    <li>
+                        <i class="ri-wallet-3-line"></i>
+                        <b>极简记账</b>
+                        <span>三步完成一笔</span>
+                    </li>
+                    <li>
+                        <i class="ri-book-2-line"></i>
+                        <b>情侣共享</b>
+                        <span>生活 / 旅行 / 纪念日</span>
+                    </li>
+                    <li>
+                        <i class="ri-shield-check-line"></i>
+                        <b>本地优先</b>
+                        <span>数据自己掌握</span>
+                    </li>
+                    <li>
+                        <i class="ri-game-line"></i>
+                        <b>宠物陪伴</b>
+                        <span>养只猫咪，一起成长</span>
+                    </li>
+                </ul>
             </div>
 
             <!-- 手机样机（保留外壳，产品用图片） -->
             <div class="phone-stage reveal d3">
-                <span class="deco deco-1"></span>
-                <span class="deco deco-2"></span>
                 <div class="phone">
                     <span class="btn-vol"></span>
                     <span class="btn-pwr"></span>
@@ -234,7 +287,7 @@
         </main>
 
         <!-- 页脚 -->
-        <footer class="foot">© 2026 WELL · 每一笔，都为更好的生活</footer>
+        <footer class="foot">© 2026 WELL · 个人开发者</footer>
     </div>
 
     <script>
@@ -245,8 +298,7 @@
                 if (c) {
                     var r = document.documentElement.style;
                     r.setProperty('--primary', c);
-                    r.setProperty('--primary-bg', c + '1a');
-                    r.setProperty('--primary-shadow', c + '38');
+                    r.setProperty('--primary-2', c);
                 }
             } catch (e) {}
         })();
@@ -258,8 +310,7 @@
 
             function formatCount(n) {
                 if (n >= 10000) return (n / 10000).toFixed(1) + 'w';
-                if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
-                return String(n);
+                return n.toLocaleString('en-US');
             }
 
             var xhr = new XMLHttpRequest();
@@ -286,16 +337,16 @@
                     }
                     if (!apk) return;
 
-                    /* 文件大小 */
+                    /* 文件大小（仅规格行，旁边不放下载量） */
                     var sizeEl = document.getElementById('dl-size');
                     if (sizeEl && typeof apk.size === 'number') {
                         sizeEl.textContent = (apk.size / 1048576).toFixed(1) + ' MB';
                     }
 
-                    /* 下载量 */
+                    /* 下载量（独立统计块） */
                     var countEl = document.getElementById('dl-count');
                     if (countEl && typeof apk.download_count === 'number') {
-                        countEl.innerHTML = '<i class="ri-download-2-line"></i> ' + formatCount(apk.download_count) + ' 次下载';
+                        countEl.textContent = formatCount(apk.download_count);
                     }
 
                     /* 下载按钮指向 GitHub 资源，保证下载量统计一致 */
