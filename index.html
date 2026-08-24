@@ -126,6 +126,7 @@
         position:relative;
         width:min(320px,82vw);
         height:min(582px,156vw);
+        touch-action:pan-y; /* 允许竖向滚动，横向手势交给 JS，避免滑动手机时页面上下滚 */
     }
     .phone{
         position:absolute;left:50%;top:50%;
@@ -235,6 +236,7 @@
             height:min(510px,140vw);
             margin-left:calc(min(250px,68vw) / -2);
             margin-top:calc(min(510px,140vw) / -2);
+            transition:none; /* 移动端滑动切换不做过渡动画，即时切换 */
         }
         .island{width:78px;height:22px;top:9px;}
         /* 移动端：轮播容器占满版心（不用 100vw，避免滚动条导致整块向右偏移），两侧手机由 overflow:hidden 裁切 */
@@ -543,19 +545,29 @@
             });
 
             /* 滑动 / 拖拽：仅移动端用于切换浏览 */
-            var startX = null;
-            var dragging = false;
-            function down(x) { startX = x; dragging = true; }
+            var startX = null, startY = null, dragging = false, axis = null;
+            function down(x, y) { startX = x; startY = y; dragging = true; axis = null; }
             function up(x) {
-                if (!dragging || startX === null) return;
+                if (!dragging) return;
                 var dx = x - startX;
-                if (mq.matches && Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
-                dragging = false; startX = null;
+                if (mq.matches && axis !== 'v' && Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
+                dragging = false; startX = null; startY = null; axis = null;
             }
-            carousel.addEventListener('touchstart', function (e) { down(e.touches[0].clientX); }, { passive: true });
+            carousel.addEventListener('touchstart', function (e) {
+                var t = e.touches[0]; down(t.clientX, t.clientY);
+            }, { passive: true });
+            carousel.addEventListener('touchmove', function (e) {
+                if (!dragging) return;
+                var t = e.touches[0];
+                var dx = t.clientX - startX, dy = t.clientY - startY;
+                if (axis === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+                    axis = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+                }
+                if (axis === 'h') e.preventDefault(); // 横向滑动时阻止页面上下滚动
+            }, { passive: false });
             carousel.addEventListener('touchend', function (e) { up(e.changedTouches[0].clientX); });
             carousel.addEventListener('mousedown', function (e) {
-                down(e.clientX);
+                down(e.clientX, e.clientY);
                 if (mq.matches) e.preventDefault(); // 移动端避免拖出图片残影
             });
             window.addEventListener('mouseup', function (e) { if (dragging) up(e.clientX); });
