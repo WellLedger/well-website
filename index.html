@@ -228,13 +228,13 @@
         }
         .features li{flex:none;}
         .features i{margin-bottom:8px;}
-        .phone-stage{justify-content:center;min-height:min(560px,168vw);}
-        /* 移动端：中间样机进一步加大，两侧紧贴成堆叠感、仅露一小条；摄像头缩小 */
+        .phone-stage{justify-content:center;min-height:min(580px,168vw);}
+        /* 移动端：同尺寸并排轮播——样机略缩以让左右邻居清晰并排可见；摄像头缩小 */
         .phone{
-            width:min(280px,76vw);
-            height:min(572px,156vw);
-            margin-left:calc(min(280px,76vw) / -2);
-            margin-top:calc(min(572px,156vw) / -2);
+            width:min(250px,68vw);
+            height:min(510px,140vw);
+            margin-left:calc(min(250px,68vw) / -2);
+            margin-top:calc(min(510px,140vw) / -2);
         }
         .island{width:78px;height:22px;top:9px;}
         /* 移动端：轮播容器占满版心（不用 100vw，避免滚动条导致整块向右偏移），两侧手机由 overflow:hidden 裁切 */
@@ -484,13 +484,11 @@
                 }
             }
 
-            /* 移动端：中间大、两侧紧贴堆叠各露约一半（不重叠遮挡），滑动切换 */
+            /* 移动端：所有手机同尺寸、并排成一行，左右滑动切换（中间当前、左右邻居同大） */
             function renderMobile() {
-                var cw = carousel.offsetWidth || 320;   // 移动端轮播容器宽度（铺满屏）
-                var pw = phones[0].offsetWidth || 240;
-                var cScale = 1;       // 当前手机保持原尺寸（中间最大）
-                var sScale = 0.5;     // 两侧手机更小
-                var shift = pw * 0.36; // 两侧中心紧压在中间手机后，仅外侧露出一小条
+                var pw = phones[0].offsetWidth || 280;
+                var gap = 18;                 // 同尺寸手机之间的间隙
+                var step = pw + gap;          // 每张手机按整宽+间隙平移，呈并排一行
                 for (var i = 0; i < n; i++) {
                     var off = i - current;
                     if (off > n / 2) off -= n;
@@ -498,17 +496,17 @@
                     var a = Math.abs(off);
                     var p = phones[i];
                     if (a === 0) {
-                        p.style.transform = 'translate(0,0) scale(' + cScale + ')';
+                        p.style.transform = 'translate(0,0) scale(1)';
                         p.style.opacity = '1';
                         p.style.zIndex = '100';
                         p.style.pointerEvents = 'auto';
                     } else if (a === 1) {
-                        p.style.transform = 'translate(' + (off * shift) + 'px,0) scale(' + sScale + ')';
-                        p.style.opacity = '0.92';
+                        p.style.transform = 'translate(' + (off * step) + 'px,0) scale(1)';
+                        p.style.opacity = '0.55';
                         p.style.zIndex = '90';
                         p.style.pointerEvents = 'none';
                     } else {
-                        p.style.transform = 'translate(' + (off * shift) + 'px,0) scale(' + sScale + ')';
+                        p.style.transform = 'translate(' + (off * step) + 'px,0) scale(1)';
                         p.style.opacity = '0';
                         p.style.zIndex = '10';
                         p.style.pointerEvents = 'none';
