@@ -167,6 +167,9 @@
     .shot{
         position:absolute;inset:0;z-index:1;
         width:100%;height:100%;object-fit:cover;display:block;background:#e9e4db;
+        -webkit-user-drag:none;user-drag:none;
+        -webkit-user-select:none;user-select:none;
+        pointer-events:none; /* 防止横向滑动时触发浏览器原生图片拖拽残影（幻影） */
     }
     .shot-ph{
         position:absolute;inset:0;z-index:0;
@@ -236,7 +239,8 @@
             height:min(510px,140vw);
             margin-left:calc(min(250px,68vw) / -2);
             margin-top:calc(min(510px,140vw) / -2);
-            transition:none; /* 移动端滑动切换不做过渡动画，即时切换 */
+            /* 移动端滑动切换保留过渡：松手后平滑滑动到目标机型（滑动期间不做跟随，无延迟） */
+            transition:transform .42s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
         }
         .island{width:78px;height:22px;top:9px;}
         /* 移动端：轮播容器占满版心（不用 100vw，避免滚动条导致整块向右偏移），两侧手机由 overflow:hidden 裁切 */
@@ -319,7 +323,7 @@
                         <div class="screen">
                             <div class="island"></div>
                             <div class="shot-ph">在此放入产品截图<br>替换 product.png</div>
-                            <img class="shot" src="product.png" alt="WELL App 截图" onerror="this.remove();" />
+                            <img class="shot" src="product.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
                             <div class="home-ind"></div>
                         </div>
                     </div>
@@ -329,7 +333,7 @@
                         <div class="screen">
                             <div class="island"></div>
                             <div class="shot-ph tone">
-                             <img class="shot" src="product01.png" alt="WELL App 截图" onerror="this.remove();" />
+                             <img class="shot" src="product01.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
                             </div>
                             <div class="home-ind"></div>
                         </div>
@@ -340,7 +344,7 @@
                         <div class="screen">
                             <div class="island"></div>
                             <div class="shot-ph tone tone-2">
-                                <img class="shot" src="product02.png" alt="WELL App 截图" onerror="this.remove();" />
+                                <img class="shot" src="product02.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
 
                             </div>
                             <div class="home-ind"></div>
@@ -352,7 +356,7 @@
                         <div class="screen">
                             <div class="island"></div>
                             <div class="shot-ph tone tone-3">
-                                <img class="shot" src="product03.png" alt="WELL App 截图" onerror="this.remove();" />
+                                <img class="shot" src="product03.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
 
                             </div>
                             <div class="home-ind"></div>
