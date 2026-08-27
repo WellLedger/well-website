@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>WELL 记账本 · 安卓下载</title>
-<meta name="description" content="WELL 记账本安卓版官方下载。每一笔，都为更好的生活。" />
+<title>WELL 记账 · 安卓下载</title>
+<meta name="description" content="WELL 记账安卓版官方下载，极简记账APP，支持情侣共享记账、本地优先数据存储、宠物陪伴成长。每一笔，都为更好的生活。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -19,29 +19,29 @@
         --primary:#4F9BFA;
         --primary-2:#3E8BE8;
         --sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue','PingFang SC',sans-serif;
+        --ph-h:min(660px,72vh);
+        --ph-w:calc(var(--ph-h) * 0.488);
     }
 
     *{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;}
+    html{scroll-behavior:smooth;height:100%;}
     body{
         font-family:var(--sans);
         color:var(--ink);
-        /* 背景淡蓝色点缀：柔和的品牌蓝晕染，置于底层 */
         background:
             radial-gradient(820px 560px at 88% -8%, rgba(79,155,250,0.12), transparent 62%),
             radial-gradient(680px 520px at 2% 108%, rgba(79,155,250,0.10), transparent 60%),
             radial-gradient(520px 380px at 60% 40%, rgba(79,155,250,0.06), transparent 64%),
             var(--bg);
-        min-height:100vh;
+        height:100vh;
+        overflow:hidden;
         -webkit-font-smoothing:antialiased;
         text-rendering:optimizeLegibility;
-        overflow-x:hidden;
     }
     a{text-decoration:none;color:inherit;}
 
-    .wrap{max-width:1120px;margin:0 auto;padding:0 40px;}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 40px;min-height:100vh;display:flex;flex-direction:column;}
 
-    /* ===== 顶部导航 ===== */
     .nav{
         display:flex;align-items:center;justify-content:space-between;
         padding:30px 0;
@@ -60,10 +60,9 @@
     }
     .nav-link:hover{color:var(--ink);}
 
-    /* ===== 主区 ===== */
     .hero{
-        display:grid;grid-template-columns:1.3fr 0.7fr;gap:90px;align-items:center;
-        padding:120px 0 140px;
+        display:grid;grid-template-columns:1.2fr 0.8fr;gap:80px;align-items:center;
+        flex:1 1 auto;min-height:0;width:100%;
     }
     .hero-text{max-width:640px;}
 
@@ -78,7 +77,6 @@
         color:var(--primary);margin-bottom:24px;
     }
 
-    /* ===== 下载区（无卡片，纯留白） ===== */
     .dl-row{display:flex;align-items:center;gap:36px;margin-bottom:16px;}
     .btn{
         display:inline-flex;align-items:center;gap:9px;
@@ -91,7 +89,6 @@
     .btn-primary:hover{background:#f5f5f7;border-color:rgba(0,0,0,.28);transform:translateY(-1px);}
     .btn-primary:active{transform:translateY(0);}
 
-    /* 下载统计：独立成块，不与文件大小并列 */
     .dl-stat{display:flex;align-items:baseline;gap:8px;}
     .dl-stat-num{
         font-size:26px;font-weight:600;color:var(--ink);letter-spacing:.3px;
@@ -99,57 +96,54 @@
     }
     .dl-stat-label{font-size:13px;color:var(--ink-light);letter-spacing:.5px;}
 
-    /* 规格行：版本 / 大小 / 系统（文件大小单独成行，旁边不放下载量） */
     .dl-specs{
         display:flex;align-items:center;gap:10px;flex-wrap:wrap;
         font-size:13px;color:var(--ink-light);letter-spacing:.3px;
     }
     .dl-specs .sep{opacity:.5;}
 
-    /* 价值点：无框无底色，细线图标 + 留白（单行排列，不换行） */
     .features{
         list-style:none;display:flex;gap:18px;margin-top:58px;
     }
-    .features li{flex:1 1 0;min-width:0;}
+    .features li{flex:1 1 0;min-width:0;text-align:center;}
     .features i{font-size:23px;color:var(--ink-light);display:block;margin-bottom:12px;}
     .features b{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:.2px;}
     .features span{font-size:13px;color:var(--ink-light);line-height:1.55;letter-spacing:.1px;}
 
-    /* ===== 手机样机轮播（堆叠 + 滑动切换） ===== */
     .phone-stage{
         position:relative;
         display:flex;flex-direction:column;align-items:center;justify-content:center;
-        min-height:min(720px,200vw);
+        min-height:var(--ph-h);
         perspective:1400px;
     }
     .carousel{
         position:relative;
-        width:min(320px,82vw);
-        height:min(582px,156vw);
-        touch-action:pan-y; /* 允许竖向滚动，横向手势交给 JS，避免滑动手机时页面上下滚 */
+        width:min(360px,82vw);
+        height:var(--ph-h);
+        touch-action:pan-y;
     }
     .phone{
         position:absolute;left:50%;top:50%;
-        width:min(284px,76vw);
-        height:min(582px,156vw);
-        margin-left:calc(min(284px,76vw) / -2);
-        margin-top:calc(min(582px,156vw) / -2);
+        width:var(--ph-w);
+        height:var(--ph-h);
+        margin-left:calc(var(--ph-w) / -2);
+        margin-top:calc(var(--ph-h) / -2);
         transform-origin:center center;
         transition:transform .55s cubic-bezier(.2,.7,.2,1), opacity .45s ease;
         will-change:transform,opacity;
         border-radius:50px;
-        background:linear-gradient(150deg,#4a4a52 0%,#1b1b1f 52%,#2c2c30 100%);
+        background:#2a2a30;
         padding:11px;
         box-shadow:
             0 2px 6px rgba(0,0,0,.16),
             0 40px 80px -28px rgba(0,0,0,0.30),
-            inset 0 0 0 2px rgba(255,255,255,.08);
+            inset 0 0 0 1px rgba(255,255,255,.10);
     }
     .phone::before{
         content:"";position:absolute;inset:0;border-radius:50px;pointer-events:none;z-index:6;
-        background:linear-gradient(150deg,rgba(255,255,255,.18),rgba(255,255,255,0) 34%);
+        background:none;
     }
-    .btn-vol,.btn-pwr{position:absolute;background:linear-gradient(#2d2d30,#19191b);border-radius:3px;}
+    .btn-vol,.btn-pwr{position:absolute;background:#222226;border-radius:3px;}
     .btn-vol{left:-3px;top:128px;width:3px;height:58px;}
     .btn-pwr{right:-3px;top:150px;width:3px;height:88px;}
     .screen{
@@ -158,7 +152,7 @@
     }
     .screen::after{
         content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
-        background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,0) 42%);
+        background:none;
     }
     .island{
         position:absolute;top:11px;left:50%;transform:translateX(-50%);
@@ -169,7 +163,7 @@
         width:100%;height:100%;object-fit:cover;display:block;background:#e9e4db;
         -webkit-user-drag:none;user-drag:none;
         -webkit-user-select:none;user-select:none;
-        pointer-events:none; /* 防止横向滑动时触发浏览器原生图片拖拽残影（幻影） */
+        pointer-events:none;
     }
     .shot-ph{
         position:absolute;inset:0;z-index:0;
@@ -183,7 +177,6 @@
         width:118px;height:5px;border-radius:99px;
         background:rgba(255,255,255,.5);z-index:5;
     }
-    /* 样机占位图标签 + 彩色色调（对应不同功能屏） */
     .ph-tag{
         display:inline-block;font-size:13px;font-weight:600;letter-spacing:.6px;
         color:var(--primary);background:rgba(79,155,250,0.14);
@@ -195,17 +188,13 @@
     .shot-ph.tone-3{background:linear-gradient(160deg,#fff2f7,#ffe7f1);}
     .shot-ph.tone-3 .ph-tag{color:#df6c97;background:rgba(223,108,151,0.14);}
 
-    /* 桌面端：手机可点击展开，给出指针提示 */
     .phone{cursor:pointer;}
 
-    /* ===== 页脚 ===== */
     .foot{
-        text-align:center;padding:34px 0 50px;
+        text-align:center;padding:20px 0;
         font-size:12px;color:var(--ink-light);letter-spacing:.5px;
-        border-top:1px solid var(--line);
     }
 
-    /* ===== 入场动画 ===== */
     .reveal{opacity:0;transform:translateY(16px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards;}
     .d1{animation-delay:.06s;} .d2{animation-delay:.14s;} .d3{animation-delay:.22s;} .d4{animation-delay:.3s;}
     @keyframes rise{to{opacity:1;transform:none;}}
@@ -213,17 +202,17 @@
         .reveal{animation:none;opacity:1;transform:none;}
     }
 
-    /* ===== 响应式 ===== */
     @media (max-width:1024px){
-        .hero{gap:60px;padding:90px 0 110px;}
+        :root{--ph-h:min(540px,58vh);}
+        .hero{gap:60px;}
     }
     @media (max-width:860px){
+        html,body{height:auto;overflow-y:auto;}
         .wrap{padding:0 26px;}
         .hero{grid-template-columns:1fr;gap:54px;padding:56px 0 80px;text-align:center;}
         .hero-text{max-width:none;margin:0 auto;}
         .dl-row{flex-direction:column;gap:16px;align-items:center;}
         .dl-specs{justify-content:center;}
-        /* 移动端：features 改为两行两列（2×2）排列 */
         .features{
             display:grid;
             grid-template-columns:repeat(2,1fr);
@@ -233,24 +222,20 @@
         .features li{flex:none;}
         .features i{margin-bottom:8px;}
         .phone-stage{justify-content:center;min-height:min(580px,168vw);}
-        /* 移动端：同尺寸并排轮播——样机略缩以让左右邻居清晰并排可见；摄像头缩小 */
         .phone{
             width:min(250px,68vw);
             height:min(510px,140vw);
             margin-left:calc(min(250px,68vw) / -2);
             margin-top:calc(min(510px,140vw) / -2);
-            /* 移动端滑动切换保留过渡：松手后平滑滑动到目标机型（滑动期间不做跟随，无延迟） */
             transition:transform .42s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
         }
         .island{width:78px;height:22px;top:9px;}
-        /* 移动端：轮播容器占满版心（不用 100vw，避免滚动条导致整块向右偏移），两侧手机由 overflow:hidden 裁切 */
-        .carousel{overflow:hidden;width:100%;max-width:460px;}
+        .carousel{overflow:hidden;width:100%;max-width:460px;height:min(540px,148vw);}
     }
 </style>
 </head>
 <body>
     <div class="wrap">
-        <!-- 导航 -->
         <header class="nav">
             <div class="brand">
                 <span class="brand-name">WELL</span>
@@ -261,35 +246,30 @@
             </div>
         </header>
 
-        <!-- 主区 -->
         <main class="hero">
             <div class="hero-text">
                 <div class="eyebrow reveal">每一笔，都为更好的生活</div>
-                <h1 class="title reveal d1">WELL</h1>
+                <h1 class="title reveal d1">WELL记账</h1>
 
-                <!-- 下载区：统计与规格分离 -->
                 <div class="reveal d3">
                     <div class="dl-row">
                         <a class="btn btn-primary" id="dl-btn" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener"><i class="ri-android-line"></i>安卓下载</a>
 
-                        <!-- 下载统计：独立区块，不放在文件大小旁边 -->
                         <div class="dl-stat">
                             <span class="dl-stat-num" id="dl-count">--</span>
                             <span class="dl-stat-label">次下载</span>
                         </div>
                     </div>
 
-                    <!-- 规格：版本 / 大小 / 系统（文件大小单独成行） -->
                     <div class="dl-specs">
                         <span id="dl-version">v1.0.0</span>
-                        <span class="sep">·</span>
+                        <span class="sep">|</span>
                         <span id="dl-size">-- MB</span>
-                        <span class="sep">·</span>
+                        <span class="sep">|</span>
                         <span>Android 7.0+</span>
                     </div>
                 </div>
 
-                <!-- 价值点：无框无底色 -->
                 <ul class="features reveal d4">
                     <li>
                         <i class="ri-wallet-3-line"></i>
@@ -314,7 +294,6 @@
                 </ul>
             </div>
 
-            <!-- 手机样机轮播：多图堆叠 + 滑动切换 -->
             <div class="phone-stage reveal d3">
                 <div class="carousel" id="carousel">
                     <div class="phone">
@@ -366,12 +345,10 @@
             </div>
         </main>
 
-        <!-- 页脚 -->
         <footer class="foot">© 2026 WELL · 个人开发者</footer>
     </div>
 
     <script>
-        /* 主题跟随：若站点已保存主题色则应用，保证 logo 装饰色一致 */
         (function () {
             try {
                 var c = localStorage.getItem('well_theme_color');
@@ -383,13 +360,14 @@
             } catch (e) {}
         })();
 
-        /* 从 GitHub Release 动态获取版本号、文件大小、下载量 */
         (function () {
             var repo = 'WellLedger/well-website';
-            var apiUrl = 'https://api.github.com/repos/' + repo + '/releases/latest';
+            var apiUrl = 'https://api.github.com/repos/' + repo + '/releases?per_page=100';
 
             function formatCount(n) {
+                if (n >= 100000000) return (n / 100000000).toFixed(1) + '亿';
                 if (n >= 10000) return (n / 10000).toFixed(1) + 'w';
+                if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
                 return n.toLocaleString('en-US');
             }
 
@@ -397,49 +375,51 @@
             xhr.open('GET', apiUrl, true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState !== 4) return;
-                if (xhr.status !== 200) return; // 限流或失败时保留静态回退值
+                if (xhr.status !== 200) return;
                 try {
-                    var data = JSON.parse(xhr.responseText);
+                    var releases = JSON.parse(xhr.responseText);
+                    if (!Array.isArray(releases) || !releases.length) return;
 
-                    /* 版本号 */
-                    var tag = data.tag_name || '';
-                    if (tag) {
+                    var latest = releases[0];
+
+                    var total = 0;
+                    var latestApk = null;
+                    for (var r = 0; r < releases.length; r++) {
+                        var assets = releases[r].assets || [];
+                        for (var a = 0; a < assets.length; a++) {
+                            var asset = assets[a];
+                            if (asset.name && asset.name.toLowerCase().endsWith('.apk')) {
+                                if (typeof asset.download_count === 'number') {
+                                    total += asset.download_count;
+                                }
+                                if (!latestApk) latestApk = asset;
+                            }
+                        }
+                    }
+
+                    if (latest && latest.tag_name) {
+                        var tag = latest.tag_name;
                         var verEl = document.getElementById('dl-version');
                         if (verEl) verEl.textContent = tag.charAt(0) === 'v' ? tag : 'v' + tag;
                     }
 
-                    /* 找到 APK 资源 */
-                    var apk = null;
-                    if (data.assets && data.assets.length) {
-                        apk = data.assets.filter(function (a) {
-                            return a.name && a.name.toLowerCase().endsWith('.apk');
-                        })[0] || data.assets[0];
-                    }
-                    if (!apk) return;
-
-                    /* 文件大小（仅规格行，旁边不放下载量） */
                     var sizeEl = document.getElementById('dl-size');
-                    if (sizeEl && typeof apk.size === 'number') {
-                        sizeEl.textContent = (apk.size / 1048576).toFixed(1) + ' MB';
+                    if (sizeEl && latestApk && typeof latestApk.size === 'number') {
+                        sizeEl.textContent = (latestApk.size / 1048576).toFixed(1) + ' MB';
                     }
 
-                    /* 下载量（独立统计块） */
                     var countEl = document.getElementById('dl-count');
-                    if (countEl && typeof apk.download_count === 'number') {
-                        countEl.textContent = formatCount(apk.download_count);
-                    }
+                    if (countEl) countEl.textContent = formatCount(total);
 
-                    /* 下载按钮指向 GitHub 资源，保证下载量统计一致 */
                     var btn = document.getElementById('dl-btn');
-                    if (btn && apk.browser_download_url) {
-                        btn.href = apk.browser_download_url;
+                    if (btn && latestApk && latestApk.browser_download_url) {
+                        btn.href = latestApk.browser_download_url;
                     }
                 } catch (e) {}
             };
             xhr.send();
         })();
 
-        /* 手机样机轮播：堆叠 + 滑动切换 */
         (function () {
             var carousel = document.getElementById('carousel');
             if (!carousel) return;
@@ -447,13 +427,12 @@
             var n = phones.length;
             if (!n) return;
             var current = 0;
-            var expanded = false; // 桌面端：是否展开为四宫格
+            var expanded = false;
             var mq = window.matchMedia('(max-width:860px)');
 
-            /* 桌面端折叠：堆叠（最前一台 + 后两台微露） */
             function renderStack() {
                 for (var i = 0; i < n; i++) {
-                    var depth = (i - current + n) % n; // 0=最前，1、2=向后堆叠
+                    var depth = (i - current + n) % n;
                     var p = phones[i];
                     if (depth === 0) {
                         p.style.transform = 'translate(0,0) scale(1)';
@@ -477,7 +456,6 @@
                 }
             }
 
-            /* 桌面端展开：四台手机排成 2×2 网格（缩放后居中） */
             function renderGrid() {
                 var cells = [[-83, -158], [83, -158], [-83, 158], [83, 158]];
                 var s = 0.528;
@@ -490,11 +468,10 @@
                 }
             }
 
-            /* 移动端：所有手机同尺寸、并排成一行，左右滑动切换（中间当前、左右邻居同大） */
             function renderMobile() {
                 var pw = phones[0].offsetWidth || 280;
-                var gap = 18;                 // 同尺寸手机之间的间隙
-                var step = pw + gap;          // 每张手机按整宽+间隙平移，呈并排一行
+                var gap = 18;
+                var step = pw + gap;
                 for (var i = 0; i < n; i++) {
                     var off = i - current;
                     if (off > n / 2) off -= n;
@@ -531,24 +508,22 @@
                 render();
             }
 
-            /* 桌面端：未展开时点击展开为四宫格；展开后点击某台手机则将其设为最前并叠起 */
             carousel.addEventListener('click', function (e) {
-                if (mq.matches) return; // 移动端不响应点击
+                if (mq.matches) return;
                 if (!expanded) {
-                    expanded = true; // 展开为四宫格
+                    expanded = true;
                     render();
                 } else {
                     var ph = e.target.closest && e.target.closest('.phone');
                     if (ph) {
                         var idx = phones.indexOf(ph);
-                        if (idx > -1) current = idx; // 点击的手机置为最前
+                        if (idx > -1) current = idx;
                     }
-                    expanded = false; // 叠起来并展示对应产品图
+                    expanded = false;
                     render();
                 }
             });
 
-            /* 滑动 / 拖拽：仅移动端用于切换浏览 */
             var startX = null, startY = null, dragging = false, axis = null;
             function down(x, y) { startX = x; startY = y; dragging = true; axis = null; }
             function up(x) {
@@ -567,16 +542,15 @@
                 if (axis === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
                     axis = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
                 }
-                if (axis === 'h') e.preventDefault(); // 横向滑动时阻止页面上下滚动
+                if (axis === 'h') e.preventDefault();
             }, { passive: false });
             carousel.addEventListener('touchend', function (e) { up(e.changedTouches[0].clientX); });
             carousel.addEventListener('mousedown', function (e) {
                 down(e.clientX, e.clientY);
-                if (mq.matches) e.preventDefault(); // 移动端避免拖出图片残影
+                if (mq.matches) e.preventDefault();
             });
             window.addEventListener('mouseup', function (e) { if (dragging) up(e.clientX); });
 
-            /* 视口变化时回到合适状态并重排（移动端取消展开） */
             window.addEventListener('resize', function () {
                 if (mq.matches) expanded = false;
                 render();
