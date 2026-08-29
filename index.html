@@ -1,563 +1,816 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>WELL 记账 · 安卓下载</title>
-<meta name="description" content="WELL 记账安卓版官方下载，极简记账APP，支持情侣共享记账、本地优先数据存储、宠物陪伴成长。每一笔，都为更好的生活。" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
-<style>
-    :root{
-        --bg:#FFFFFF;
-        --ink:#1D1D1F;
-        --ink-soft:#6E6E73;
-        --ink-light:#86868B;
-        --line:rgba(0,0,0,0.10);
-        --primary:#4F9BFA;
-        --primary-2:#3E8BE8;
-        --sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue','PingFang SC',sans-serif;
-        --ph-h:min(660px,72vh);
-        --ph-w:calc(var(--ph-h) * 0.488);
-    }
-
-    *{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;height:100%;}
-    body{
-        font-family:var(--sans);
-        color:var(--ink);
-        background:
-            radial-gradient(820px 560px at 88% -8%, rgba(79,155,250,0.12), transparent 62%),
-            radial-gradient(680px 520px at 2% 108%, rgba(79,155,250,0.10), transparent 60%),
-            radial-gradient(520px 380px at 60% 40%, rgba(79,155,250,0.06), transparent 64%),
-            var(--bg);
-        height:100vh;
-        overflow:hidden;
-        -webkit-font-smoothing:antialiased;
-        text-rendering:optimizeLegibility;
-    }
-    a{text-decoration:none;color:inherit;}
-
-    .wrap{max-width:1120px;margin:0 auto;padding:0 40px;min-height:100vh;display:flex;flex-direction:column;}
-
-    .nav{
-        display:flex;align-items:center;justify-content:space-between;
-        padding:30px 0;
-    }
-    .brand{display:flex;align-items:center;}
-    .brand-name{font-weight:600;letter-spacing:2.5px;font-size:19px;}
-    .brand-tag{
-        font-size:9px;letter-spacing:1.5px;color:#fff;
-        background:var(--primary);border-radius: 360px 360px 360px 0;
-        padding:3px 9px;margin-left:14px;font-weight:400;white-space:nowrap;
-    }
-    .nav-right{display:flex;align-items:center;gap:26px;}
-    .nav-link{
-        font-size:14px;color:var(--ink-soft);letter-spacing:.3px;
-        display:inline-flex;align-items:center;gap:7px;transition:color .2s ease;
-    }
-    .nav-link:hover{color:var(--ink);}
-
-    .hero{
-        display:grid;grid-template-columns:1.2fr 0.8fr;gap:80px;align-items:center;
-        flex:1 1 auto;min-height:0;width:100%;
-    }
-    .hero-text{max-width:640px;}
-
-    .eyebrow{
-        font-size:14px;color:var(--ink-light);letter-spacing:1.5px;
-        font-weight:500;margin-bottom:20px;
-    }
-
-    .title{
-        font-size:clamp(52px,11vw,88px);
-        line-height:1.0;font-weight:600;letter-spacing:-1px;
-        color:var(--primary);margin-bottom:24px;
-    }
-
-    .dl-row{display:flex;align-items:center;gap:36px;margin-bottom:16px;}
-    .btn{
-        display:inline-flex;align-items:center;gap:9px;
-        font-size:15px;font-weight:400;letter-spacing:.4px;
-        padding:13px 30px;border-radius:980px;
-        transition:background .2s ease, transform .2s ease;
-    }
-    .btn i{font-size:18px;}
-    .btn-primary{background:#fff;color:var(--ink);border:1px solid rgba(0,0,0,.16);}
-    .btn-primary:hover{background:#f5f5f7;border-color:rgba(0,0,0,.28);transform:translateY(-1px);}
-    .btn-primary:active{transform:translateY(0);}
-
-    .dl-stat{display:flex;align-items:baseline;gap:8px;}
-    .dl-stat-num{
-        font-size:26px;font-weight:600;color:var(--ink);letter-spacing:.3px;
-        font-variant-numeric:tabular-nums;
-    }
-    .dl-stat-label{font-size:13px;color:var(--ink-light);letter-spacing:.5px;}
-
-    .dl-specs{
-        display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-        font-size:13px;color:var(--ink-light);letter-spacing:.3px;
-    }
-    .dl-specs .sep{opacity:.5;}
-
-    .features{
-        list-style:none;display:flex;gap:18px;margin-top:58px;
-    }
-    .features li{flex:1 1 0;min-width:0;text-align:center;}
-    .features i{font-size:23px;color:var(--ink-light);display:block;margin-bottom:12px;}
-    .features b{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:.2px;}
-    .features span{font-size:13px;color:var(--ink-light);line-height:1.55;letter-spacing:.1px;}
-
-    .phone-stage{
-        position:relative;
-        display:flex;flex-direction:column;align-items:center;justify-content:center;
-        min-height:var(--ph-h);
-        perspective:1400px;
-    }
-    .carousel{
-        position:relative;
-        width:min(360px,82vw);
-        height:var(--ph-h);
-        touch-action:pan-y;
-    }
-    .phone{
-        position:absolute;left:50%;top:50%;
-        width:var(--ph-w);
-        height:var(--ph-h);
-        margin-left:calc(var(--ph-w) / -2);
-        margin-top:calc(var(--ph-h) / -2);
-        transform-origin:center center;
-        transition:transform .55s cubic-bezier(.2,.7,.2,1), opacity .45s ease;
-        will-change:transform,opacity;
-        border-radius:50px;
-        background:#2a2a30;
-        padding:11px;
-        box-shadow:
-            0 2px 6px rgba(0,0,0,.16),
-            0 40px 80px -28px rgba(0,0,0,0.30),
-            inset 0 0 0 1px rgba(255,255,255,.10);
-    }
-    .phone::before{
-        content:"";position:absolute;inset:0;border-radius:50px;pointer-events:none;z-index:6;
-        background:none;
-    }
-    .btn-vol,.btn-pwr{position:absolute;background:#222226;border-radius:3px;}
-    .btn-vol{left:-3px;top:128px;width:3px;height:58px;}
-    .btn-pwr{right:-3px;top:150px;width:3px;height:88px;}
-    .screen{
-        position:relative;width:100%;height:100%;
-        border-radius:40px;overflow:hidden;background:#0c0c0e;
-    }
-    .screen::after{
-        content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
-        background:none;
-    }
-    .island{
-        position:absolute;top:11px;left:50%;transform:translateX(-50%);
-        width:92px;height:26px;background:#000;border-radius:99px;z-index:5;
-    }
-    .shot{
-        position:absolute;inset:0;z-index:1;
-        width:100%;height:100%;object-fit:cover;display:block;background:#e9e4db;
-        -webkit-user-drag:none;user-drag:none;
-        -webkit-user-select:none;user-select:none;
-        pointer-events:none;
-    }
-    .shot-ph{
-        position:absolute;inset:0;z-index:0;
-        display:flex;flex-direction:column;gap:8px;
-        align-items:center;justify-content:center;
-        color:#a8a8a8;font-size:12px;text-align:center;line-height:1.7;padding:0 24px;
-        background:#fafafa;letter-spacing:1px;
-    }
-    .home-ind{
-        position:absolute;bottom:9px;left:50%;transform:translateX(-50%);
-        width:118px;height:5px;border-radius:99px;
-        background:rgba(255,255,255,.5);z-index:5;
-    }
-    .ph-tag{
-        display:inline-block;font-size:13px;font-weight:600;letter-spacing:.6px;
-        color:var(--primary);background:rgba(79,155,250,0.14);
-        padding:6px 16px;border-radius:999px;margin-bottom:4px;
-    }
-    .shot-ph.tone{background:linear-gradient(160deg,#f2f8ff,#e7f1ff);}
-    .shot-ph.tone-2{background:linear-gradient(160deg,#f1fbf0,#e6f6e9);}
-    .shot-ph.tone-2 .ph-tag{color:#37a86a;background:rgba(55,168,106,0.14);}
-    .shot-ph.tone-3{background:linear-gradient(160deg,#fff2f7,#ffe7f1);}
-    .shot-ph.tone-3 .ph-tag{color:#df6c97;background:rgba(223,108,151,0.14);}
-
-    .phone{cursor:pointer;}
-
-    .foot{
-        text-align:center;padding:20px 0;
-        font-size:12px;color:var(--ink-light);letter-spacing:.5px;
-    }
-
-    .reveal{opacity:0;transform:translateY(16px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards;}
-    .d1{animation-delay:.06s;} .d2{animation-delay:.14s;} .d3{animation-delay:.22s;} .d4{animation-delay:.3s;}
-    @keyframes rise{to{opacity:1;transform:none;}}
-    @media (prefers-reduced-motion:reduce){
-        .reveal{animation:none;opacity:1;transform:none;}
-    }
-
-    @media (max-width:1024px){
-        :root{--ph-h:min(540px,58vh);}
-        .hero{gap:60px;}
-    }
-    @media (max-width:860px){
-        html,body{height:auto;overflow-y:auto;}
-        .wrap{padding:0 26px;}
-        .hero{grid-template-columns:1fr;gap:54px;padding:56px 0 80px;text-align:center;}
-        .hero-text{max-width:none;margin:0 auto;}
-        .dl-row{flex-direction:column;gap:16px;align-items:center;}
-        .dl-specs{justify-content:center;}
-        .features{
-            display:grid;
-            grid-template-columns:repeat(2,1fr);
-            gap:28px 18px;
-            margin-top:44px;
+    <title>WELL 记账 · 安卓 & iOS 下载</title>
+    <meta name="description" content="WELL 记账官方下载，支持安卓与 iOS。极简记账、情侣共享、本地优先、宠物陪伴。每一笔，都为更好的生活。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="webfonts/remixicon.css" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #FFFFFF;
+            --ink: #1D1D1F;
+            --ink-soft: #6E6E73;
+            --ink-light: #86868B;
+            --line: rgba(0,0,0,0.10);
+            --primary: #4F9BFA;
+            --primary-2: #3E8BE8;
+            --sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'PingFang SC', sans-serif;
+            --ph-h: min(660px, 72vh);
+            --ph-w: calc(var(--ph-h) * 0.488);
         }
-        .features li{flex:none;}
-        .features i{margin-bottom:8px;}
-        .phone-stage{justify-content:center;min-height:min(580px,168vw);}
-        .phone{
-            width:min(250px,68vw);
-            height:min(510px,140vw);
-            margin-left:calc(min(250px,68vw) / -2);
-            margin-top:calc(min(510px,140vw) / -2);
-            transition:transform .42s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; height: 100%; }
+        body {
+            font-family: var(--sans);
+            color: var(--ink);
+            background:
+                radial-gradient(820px 560px at 88% -8%, rgba(79,155,250,0.12), transparent 62%),
+                radial-gradient(680px 520px at 2% 108%, rgba(79,155,250,0.10), transparent 60%),
+                radial-gradient(520px 380px at 60% 40%, rgba(79,155,250,0.06), transparent 64%),
+                var(--bg);
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
-        .island{width:78px;height:22px;top:9px;}
-        .carousel{overflow:hidden;width:100%;max-width:460px;height:min(540px,148vw);}
-    }
-</style>
+        a { text-decoration: none; color: inherit; }
+
+        .wrap { max-width: 1360px; margin: 0 auto; padding: 0 20px; min-height: 100vh; display: flex; flex-direction: column; }
+
+        .nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 30px 0;
+        }
+        .brand { display: flex; align-items: center; }
+        .brand-name { font-weight: 600; letter-spacing: 2.5px; font-size: 19px; }
+        .brand-tag {
+            font-size: 9px; letter-spacing: 1.5px; color: #fff;
+            background: var(--primary); border-radius: 360px 360px 360px 0;
+            padding: 3px 9px; margin-left: 14px; font-weight: 400; white-space: nowrap;
+        }
+        .nav-right { display: flex; align-items: center; gap: 26px; }
+        .nav-link {
+            font-size: 14px; color: var(--ink-soft); letter-spacing: .3px;
+            display: inline-flex; align-items: center; gap: 7px; transition: color .2s ease;
+        }
+        .nav-link:hover { color: var(--ink); }
+
+        .hero {
+            display: grid; grid-template-columns: 1fr 0.9fr; gap: 40px; align-items: center;
+            flex: 1 1 auto; min-height: 0; width: 100%;
+        }
+        .hero-text { max-width: 640px; }
+
+        .eyebrow {
+            font-size: 14px; color: var(--ink-light); letter-spacing: 1.5px;
+            font-weight: 500; margin-bottom: 16px;
+        }
+
+        .title {
+            font-size: clamp(44px, 9vw, 76px);
+            line-height: 1.0; font-weight: 600; letter-spacing: -1px;
+            color: var(--primary); margin-bottom: 20px;
+        }
+
+        .dl-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .dl-platforms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 20px;
+            align-items: stretch;
+        }
+
+        .platform-card {
+            flex: 1 1 200px;
+            min-width: 180px;
+            max-width: 380px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: transform .2s ease, box-shadow .2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .platform-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+        }
+
+        .platform-card .platform-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink-soft);
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            white-space: nowrap;
+        }
+        .platform-card .platform-label i {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .platform-card .platform-label .badge {
+            font-size: 10px;
+            background: var(--primary);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-weight: 400;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+        }
+        .platform-card .platform-label .badge.ios-badge {
+            background: #000;
+        }
+
+        .platform-card .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: .3px;
+            padding: 10px 18px;
+            border-radius: 980px;
+            border: 1px solid rgba(0,0,0,.12);
+            background: #fff;
+            color: var(--ink);
+            transition: background .2s ease, transform .2s ease;
+            width: 100%;
+            justify-content: center;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .platform-card .btn i { font-size: 17px; flex-shrink: 0; }
+        .platform-card .btn:hover { background: #f5f5f7; border-color: rgba(0,0,0,.24); transform: translateY(-1px); }
+        .platform-card .btn:active { transform: translateY(0); }
+        .platform-card .btn-ios {
+            background: #000;
+            border-color: #000;
+            color: #fff;
+        }
+        .platform-card .btn-ios:hover { background: #1c1c1e; border-color: #1c1c1e; }
+        .platform-card .btn-ios i { color: #fff; }
+
+        .platform-card .version-hint {
+            font-size: 12px;
+            color: var(--ink-light);
+            margin-top: 10px;
+            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            gap: 4px 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .platform-card .version-hint .sep {
+            opacity: 0.4;
+        }
+
+        .card-stat {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--ink-soft);
+            white-space: nowrap;
+        }
+        .card-stat .num {
+            font-weight: 600;
+            color: var(--ink);
+            font-size: 16px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .ios-hint-inline {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--ink-soft);
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+        .ios-hint-inline i {
+            font-size: 15px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        .ios-hint-inline strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+        .ios-hint-inline .arrow {
+            color: var(--ink-light);
+            opacity: 0.4;
+            margin: 0 2px;
+        }
+
+        .features {
+            list-style: none; display: flex; gap: 16px; margin-top: 40px;
+        }
+        .features li { flex: 1 1 0; min-width: 0; text-align: center; }
+        .features i { font-size: 20px; color: var(--ink-light); display: block; margin-bottom: 10px; }
+        .features b { display: block; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; letter-spacing: .2px; }
+        .features span { font-size: 12px; color: var(--ink-light); line-height: 1.5; letter-spacing: .1px; }
+
+        .phone-stage {
+            position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: var(--ph-h);
+            perspective: 1400px;
+            margin-left: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: min(360px, 82vw);
+            height: var(--ph-h);
+            touch-action: pan-y;
+        }
+        .phone {
+            position: absolute; left: 50%; top: 50%;
+            width: var(--ph-w);
+            height: var(--ph-h);
+            margin-left: calc(var(--ph-w) / -2);
+            margin-top: calc(var(--ph-h) / -2);
+            transform-origin: center center;
+            transition: transform .55s cubic-bezier(.2,.7,.2,1), opacity .45s ease;
+            will-change: transform, opacity;
+            border-radius: 50px;
+            background: #2a2a30;
+            padding: 11px;
+            box-shadow:
+                0 2px 6px rgba(0,0,0,.16),
+                0 40px 80px -28px rgba(0,0,0,0.30),
+                inset 0 0 0 1px rgba(255,255,255,.10);
+            cursor: pointer;
+        }
+        .btn-vol, .btn-pwr { position: absolute; background: #222226; border-radius: 3px; }
+        .btn-vol { left: -3px; top: 128px; width: 3px; height: 58px; }
+        .btn-pwr { right: -3px; top: 150px; width: 3px; height: 88px; }
+        .screen {
+            position: relative; width: 100%; height: 100%;
+            border-radius: 40px; overflow: hidden; background: #0c0c0e;
+        }
+        .island {
+            position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+            width: 92px; height: 26px; background: #000; border-radius: 99px; z-index: 5;
+        }
+        .shot {
+            position: absolute; inset: 0; z-index: 1;
+            width: 100%; height: 100%; object-fit: cover; display: block; background: #e9e4db;
+            -webkit-user-drag: none; user-drag: none;
+            -webkit-user-select: none; user-select: none;
+            pointer-events: none;
+        }
+        .shot-ph {
+            position: absolute; inset: 0; z-index: 0;
+            display: flex; flex-direction: column; gap: 8px;
+            align-items: center; justify-content: center;
+            color: #a8a8a8; font-size: 12px; text-align: center; line-height: 1.7; padding: 0 24px;
+            background: #fafafa; letter-spacing: 1px;
+        }
+        .home-ind {
+            position: absolute; bottom: 9px; left: 50%; transform: translateX(-50%);
+            width: 118px; height: 5px; border-radius: 99px;
+            background: rgba(255,255,255,.5); z-index: 5;
+        }
+        .ph-tag {
+            display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .6px;
+            color: var(--primary); background: rgba(79,155,250,0.14);
+            padding: 6px 16px; border-radius: 999px; margin-bottom: 4px;
+        }
+        .shot-ph.tone { background: linear-gradient(160deg,#f2f8ff,#e7f1ff); }
+        .shot-ph.tone-2 { background: linear-gradient(160deg,#f1fbf0,#e6f6e9); }
+        .shot-ph.tone-2 .ph-tag { color: #37a86a; background: rgba(55,168,106,0.14); }
+        .shot-ph.tone-3 { background: linear-gradient(160deg,#fff2f7,#ffe7f1); }
+        .shot-ph.tone-3 .ph-tag { color: #df6c97; background: rgba(223,108,151,0.14); }
+
+        .foot {
+            text-align: center; padding: 20px 0;
+            font-size: 12px; color: var(--ink-light); letter-spacing: .5px;
+        }
+
+        .reveal { opacity: 0; transform: translateY(16px); animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+        .d1 { animation-delay: .06s; } .d2 { animation-delay: .14s; } .d3 { animation-delay: .22s; } .d4 { animation-delay: .3s; }
+        @keyframes rise { to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { animation: none; opacity: 1; transform: none; }
+        }
+
+        @media (max-width: 1024px) {
+            :root { --ph-h: min(540px, 58vh); }
+            .hero { gap: 40px; grid-template-columns: 1fr 0.85fr; }
+            .phone-stage { margin-left: 0; }
+            .platform-card {
+                max-width: 280px;
+                min-width: 160px;
+                padding: 16px 18px 16px;
+            }
+        }
+
+        @media (max-width: 860px) {
+            html, body { height: auto; overflow-y: auto; }
+            .wrap { padding: 0 26px; }
+            .hero { grid-template-columns: 1fr; gap: 36px; padding: 32px 0 50px; text-align: center; }
+            .hero-text { max-width: none; margin: 0 auto; }
+            .dl-platforms { flex-direction: column; align-items: center; }
+            .platform-card { flex: 0 1 auto; width: 100%; max-width: 320px; min-width: 0; }
+            .ios-hint-inline {
+                font-size: 10px;
+                gap: 3px;
+                flex-wrap: wrap;
+                white-space: normal;
+            }
+            .features {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px 16px;
+                margin-top: 32px;
+            }
+            .features li { flex: none; }
+            .features i { margin-bottom: 8px; }
+            .phone-stage { justify-content: center; min-height: min(580px, 168vw); margin-left: 0; }
+            .phone {
+                width: min(250px, 68vw);
+                height: min(510px, 140vw);
+                margin-left: calc(min(250px, 68vw) / -2);
+                margin-top: calc(min(510px, 140vw) / -2);
+                transition: transform .42s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
+            }
+            .island { width: 78px; height: 22px; top: 9px; }
+            .carousel { overflow: hidden; width: 100%; max-width: 460px; height: min(540px, 148vw); }
+        }
+
+        @media (max-width: 420px) {
+            .platform-card {
+                padding: 12px 12px 14px;
+                max-width: 100%;
+            }
+            .platform-card .btn {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+            .platform-card .version-hint {
+                font-size: 10px;
+                gap: 2px 4px;
+            }
+            .card-stat {
+                font-size: 11px;
+                white-space: nowrap;
+            }
+            .card-stat .num {
+                font-size: 13px;
+            }
+            .ios-hint-inline {
+                font-size: 10px;
+                gap: 2px;
+                flex-wrap: wrap;
+                white-space: normal;
+            }
+            .ios-hint-inline i {
+                font-size: 12px;
+            }
+            .platform-card .platform-label {
+                font-size: 12px;
+            }
+            .features {
+                gap: 16px 12px;
+            }
+            .features i { font-size: 18px; }
+            .features b { font-size: 13px; }
+            .features span { font-size: 11px; }
+        }
+    </style>
 </head>
 <body>
-    <div class="wrap">
-        <header class="nav">
-            <div class="brand">
-                <span class="brand-name">WELL</span>
-                <span class="brand-tag">官方网站</span>
-            </div>
-            <div class="nav-right">
-                <a class="nav-link" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener"><i class="ri-github-fill"></i>GitHub</a>
-            </div>
-        </header>
+<div class="wrap">
+    <header class="nav">
+        <div class="brand">
+            <span class="brand-name">WELL记账</span>
+            <span class="brand-tag">官方网站</span>
+        </div>
+        <div class="nav-right">
+            <a class="nav-link" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener"><i class="ri-github-fill"></i>GitHub</a>
+        </div>
+    </header>
 
-        <main class="hero">
-            <div class="hero-text">
-                <div class="eyebrow reveal">每一笔，都为更好的生活</div>
-                <h1 class="title reveal d1">WELL记账</h1>
+    <main class="hero">
+        <div class="hero-text">
+            <div class="eyebrow reveal">每一笔，都为更好的生活</div>
+            <h1 class="title reveal d1">WELL记账</h1>
 
-                <div class="reveal d3">
-                    <div class="dl-row">
-                        <a class="btn btn-primary" id="dl-btn" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener"><i class="ri-android-line"></i>安卓下载</a>
-
-                        <div class="dl-stat">
-                            <span class="dl-stat-num" id="dl-count">--</span>
-                            <span class="dl-stat-label">次下载</span>
-                        </div>
-                    </div>
-
-                    <div class="dl-specs">
-                        <span id="dl-version">v1.0.0</span>
-                        <span class="sep">|</span>
-                        <span id="dl-size">-- MB</span>
-                        <span class="sep">|</span>
-                        <span>Android 7.0+</span>
-                    </div>
-                </div>
-
-                <ul class="features reveal d4">
-                    <li>
-                        <i class="ri-wallet-3-line"></i>
-                        <b>极简记账</b>
-                        <span>三步完成一笔</span>
-                    </li>
-                    <li>
-                        <i class="ri-book-2-line"></i>
-                        <b>情侣共享</b>
-                        <span>生活 / 旅行 / 纪念日</span>
-                    </li>
-                    <li>
-                        <i class="ri-shield-check-line"></i>
-                        <b>本地优先</b>
-                        <span>数据自己掌握</span>
-                    </li>
-                    <li>
-                        <i class="ri-game-line"></i>
-                        <b>宠物陪伴</b>
-                        <span>养只猫咪一起成长</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="phone-stage reveal d3">
-                <div class="carousel" id="carousel">
-                    <div class="phone">
-                        <span class="btn-vol"></span>
-                        <span class="btn-pwr"></span>
-                        <div class="screen">
-                            <div class="island"></div>
-                            <div class="shot-ph">在此放入产品截图<br>替换 product.png</div>
-                            <img class="shot" src="product.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
-                            <div class="home-ind"></div>
-                        </div>
-                    </div>
-                    <div class="phone">
-                        <span class="btn-vol"></span>
-                        <span class="btn-pwr"></span>
-                        <div class="screen">
-                            <div class="island"></div>
-                            <div class="shot-ph tone">
-                             <img class="shot" src="product01.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
+            <div class="reveal d3">
+                <div class="dl-section">
+                    <div class="dl-platforms">
+                        <!-- 安卓卡片 -->
+                        <div class="platform-card">
+                            <div class="platform-label">
+                                <i class="ri-android-line"></i>
+                                <span>Android</span>
+                                <span class="badge">官方</span>
                             </div>
-                            <div class="home-ind"></div>
-                        </div>
-                    </div>
-                    <div class="phone">
-                        <span class="btn-vol"></span>
-                        <span class="btn-pwr"></span>
-                        <div class="screen">
-                            <div class="island"></div>
-                            <div class="shot-ph tone tone-2">
-                                <img class="shot" src="product02.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
-
+                            <a class="btn" id="dl-btn" href="https://github.com/WellLedger/well-website/releases/latest" target="_blank" rel="noopener">
+                                <i class="ri-android-line"></i> 下载 APK
+                            </a>
+                            <div class="version-hint">
+                                <span id="android-version">v1.0.0</span>
+                                <span class="sep">·</span>
+                                <span id="dl-size">-- MB</span>
+                                <span class="sep">·</span>
+                                <span>Android 7.0+</span>
                             </div>
-                            <div class="home-ind"></div>
-                        </div>
-                    </div>
-                    <div class="phone">
-                        <span class="btn-vol"></span>
-                        <span class="btn-pwr"></span>
-                        <div class="screen">
-                            <div class="island"></div>
-                            <div class="shot-ph tone tone-3">
-                                <img class="shot" src="product03.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
-
+                            <div class="card-stat">
+                                <i class="ri-download-line" style="font-size:13px;"></i>
+                                总下载：<span class="num" id="dl-count">--</span>
                             </div>
-                            <div class="home-ind"></div>
+                        </div>
+
+                        <!-- iOS 卡片 -->
+                        <div class="platform-card">
+                            <div class="platform-label">
+                                <i class="ri-apple-fill"></i>
+                                <span>iOS</span>
+                                <span class="badge ios-badge">Web App</span>
+                            </div>
+                            <a class="btn btn-ios" href="https://wellledger.github.io/well-for-ios/" target="_blank" rel="noopener">
+                                <i class="ri-apple-fill"></i> 打开 Web App
+                            </a>
+                            <div class="version-hint">
+                                <span id="ios-version">v1.0.0</span>
+                                <span class="sep">·</span>
+                                <span id="ios-min-os">iOS 14+</span>
+                            </div>
+                            <div class="ios-hint-inline">
+                                <i class="ri-safari-line"></i>
+                                <span>用 Safari 打开</span>
+                                <span class="arrow">→</span>
+                                <strong>「分享」</strong>
+                                <span class="arrow">→</span>
+                                <strong>「添加到主屏幕」</strong>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
 
-        <footer class="foot">© 2026 WELL · 个人开发者</footer>
-    </div>
+            <ul class="features reveal d4">
+                <li>
+                    <i class="ri-wallet-3-line"></i>
+                    <b>极简记账</b>
+                    <span>三步完成一笔</span>
+                </li>
+                <li>
+                    <i class="ri-book-2-line"></i>
+                    <b>情侣共享</b>
+                    <span>生活 / 旅行 / 纪念日</span>
+                </li>
+                <li>
+                    <i class="ri-shield-check-line"></i>
+                    <b>本地优先</b>
+                    <span>数据自己掌握</span>
+                </li>
+                <li>
+                    <i class="ri-game-line"></i>
+                    <b>宠物陪伴</b>
+                    <span>养只猫咪一起成长</span>
+                </li>
+            </ul>
+        </div>
 
-    <script>
-        (function () {
-            try {
-                var c = localStorage.getItem('well_theme_color');
-                if (c) {
-                    var r = document.documentElement.style;
-                    r.setProperty('--primary', c);
-                    r.setProperty('--primary-2', c);
-                }
-            } catch (e) {}
-        })();
+        <div class="phone-stage reveal d3">
+            <div class="carousel" id="carousel">
+                <div class="phone">
+                    <span class="btn-vol"></span>
+                    <span class="btn-pwr"></span>
+                    <div class="screen">
+                        <div class="island"></div>
+                        <div class="shot-ph">在此放入产品截图<br>替换 product.png</div>
+                        <img class="shot" src="product.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
+                        <div class="home-ind"></div>
+                    </div>
+                </div>
+                <div class="phone">
+                    <span class="btn-vol"></span>
+                    <span class="btn-pwr"></span>
+                    <div class="screen">
+                        <div class="island"></div>
+                        <div class="shot-ph tone">
+                            <img class="shot" src="product01.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
+                        </div>
+                        <div class="home-ind"></div>
+                    </div>
+                </div>
+                <div class="phone">
+                    <span class="btn-vol"></span>
+                    <span class="btn-pwr"></span>
+                    <div class="screen">
+                        <div class="island"></div>
+                        <div class="shot-ph tone tone-2">
+                            <img class="shot" src="product02.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
+                        </div>
+                        <div class="home-ind"></div>
+                    </div>
+                </div>
+                <div class="phone">
+                    <span class="btn-vol"></span>
+                    <span class="btn-pwr"></span>
+                    <div class="screen">
+                        <div class="island"></div>
+                        <div class="shot-ph tone tone-3">
+                            <img class="shot" src="product03.png" alt="WELL App 截图" draggable="false" onerror="this.remove();" />
+                        </div>
+                        <div class="home-ind"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-        (function () {
-            var repo = 'WellLedger/well-website';
-            var apiUrl = 'https://api.github.com/repos/' + repo + '/releases?per_page=100';
+    <footer class="foot">© 2026 WELL · 个人开发者</footer>
+</div>
 
-            function formatCount(n) {
-                if (n >= 100000000) return (n / 100000000).toFixed(1) + '亿';
-                if (n >= 10000) return (n / 10000).toFixed(1) + 'w';
-                if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
-                return n.toLocaleString('en-US');
+<script>
+    (function () {
+        try {
+            var c = localStorage.getItem('well_theme_color');
+            if (c) {
+                var r = document.documentElement.style;
+                r.setProperty('--primary', c);
+                r.setProperty('--primary-2', c);
+            }
+        } catch (e) {}
+    })();
+
+    (function () {
+        var repo = 'WellLedger/well-website';
+        var apiUrl = 'https://api.github.com/repos/' + repo + '/releases?per_page=100';
+
+        function formatCount(n) {
+            if (n >= 100000000) return (n / 100000000).toFixed(1) + '亿';
+            if (n >= 10000) return (n / 10000).toFixed(1) + 'w';
+            if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+            return n.toLocaleString('en-US');
+        }
+
+        // ============================================================
+        // 🆕 iOS 版本信息直接从仓库固定路径读取（不用每次传 Release）
+        // ============================================================
+        function fetchIOSVersion() {
+            // 尝试两个可能的文件名
+            var urls = [
+                'https://raw.githubusercontent.com/WellLedger/well-website/main/ios_version.json',
+                'https://raw.githubusercontent.com/WellLedger/well-website/main/ios_versio.json'
+            ];
+
+            function tryFetch(index) {
+                if (index >= urls.length) return;
+                fetch(urls[index])
+                    .then(function(res) {
+                        if (!res.ok) throw new Error('Not found');
+                        return res.json();
+                    })
+                    .then(function(data) {
+                        if (data.version) {
+                            var el = document.getElementById('ios-version');
+                            if (el) el.textContent = data.version;
+                        }
+                        if (data.min_os) {
+                            var el = document.getElementById('ios-min-os');
+                            if (el) el.textContent = data.min_os;
+                        }
+                    })
+                    .catch(function() {
+                        // 如果当前 URL 失败，尝试下一个
+                        tryFetch(index + 1);
+                    });
             }
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', apiUrl, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState !== 4) return;
-                if (xhr.status !== 200) return;
-                try {
-                    var releases = JSON.parse(xhr.responseText);
-                    if (!Array.isArray(releases) || !releases.length) return;
+            tryFetch(0);
+        }
 
-                    var latest = releases[0];
+        // 立即获取 iOS 版本
+        fetchIOSVersion();
 
-                    var total = 0;
-                    var latestApk = null;
-                    for (var r = 0; r < releases.length; r++) {
-                        var assets = releases[r].assets || [];
-                        for (var a = 0; a < assets.length; a++) {
-                            var asset = assets[a];
-                            if (asset.name && asset.name.toLowerCase().endsWith('.apk')) {
-                                if (typeof asset.download_count === 'number') {
-                                    total += asset.download_count;
-                                }
-                                if (!latestApk) latestApk = asset;
+        // ============================================================
+        // 安卓信息从 GitHub Releases 获取
+        // ============================================================
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', apiUrl, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== 4) return;
+            if (xhr.status !== 200) return;
+            try {
+                var releases = JSON.parse(xhr.responseText);
+                if (!Array.isArray(releases) || !releases.length) return;
+
+                var latest = releases[0];
+
+                var totalAndroid = 0;
+                var latestApk = null;
+
+                for (var r = 0; r < releases.length; r++) {
+                    var assets = releases[r].assets || [];
+                    for (var a = 0; a < assets.length; a++) {
+                        var asset = assets[a];
+                        var name = asset.name || '';
+
+                        if (name.toLowerCase().endsWith('.apk')) {
+                            if (typeof asset.download_count === 'number') {
+                                totalAndroid += asset.download_count;
                             }
+                            if (!latestApk) latestApk = asset;
                         }
                     }
-
-                    if (latest && latest.tag_name) {
-                        var tag = latest.tag_name;
-                        var verEl = document.getElementById('dl-version');
-                        if (verEl) verEl.textContent = tag.charAt(0) === 'v' ? tag : 'v' + tag;
-                    }
-
-                    var sizeEl = document.getElementById('dl-size');
-                    if (sizeEl && latestApk && typeof latestApk.size === 'number') {
-                        sizeEl.textContent = (latestApk.size / 1048576).toFixed(1) + ' MB';
-                    }
-
-                    var countEl = document.getElementById('dl-count');
-                    if (countEl) countEl.textContent = formatCount(total);
-
-                    var btn = document.getElementById('dl-btn');
-                    if (btn && latestApk && latestApk.browser_download_url) {
-                        btn.href = latestApk.browser_download_url;
-                    }
-                } catch (e) {}
-            };
-            xhr.send();
-        })();
-
-        (function () {
-            var carousel = document.getElementById('carousel');
-            if (!carousel) return;
-            var phones = Array.prototype.slice.call(carousel.querySelectorAll('.phone'));
-            var n = phones.length;
-            if (!n) return;
-            var current = 0;
-            var expanded = false;
-            var mq = window.matchMedia('(max-width:860px)');
-
-            function renderStack() {
-                for (var i = 0; i < n; i++) {
-                    var depth = (i - current + n) % n;
-                    var p = phones[i];
-                    if (depth === 0) {
-                        p.style.transform = 'translate(0,0) scale(1)';
-                        p.style.opacity = '1';
-                        p.style.zIndex = '100';
-                        p.style.pointerEvents = 'auto';
-                    } else if (depth <= 2) {
-                        var tx = depth * 16;
-                        var ty = -depth * 20;
-                        var sc = 1 - depth * 0.06;
-                        p.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
-                        p.style.opacity = String(1 - depth * 0.28);
-                        p.style.zIndex = String(100 - depth * 10);
-                        p.style.pointerEvents = 'none';
-                    } else {
-                        p.style.transform = 'translate(40px,-50px) scale(0.8)';
-                        p.style.opacity = '0';
-                        p.style.zIndex = '10';
-                        p.style.pointerEvents = 'none';
-                    }
                 }
-            }
 
-            function renderGrid() {
-                var cells = [[-83, -158], [83, -158], [-83, 158], [83, 158]];
-                var s = 0.528;
-                for (var i = 0; i < n; i++) {
-                    var c = cells[i] || [0, 0];
-                    phones[i].style.transform = 'translate(' + c[0] + 'px,' + c[1] + 'px) scale(' + s + ')';
-                    phones[i].style.opacity = '1';
-                    phones[i].style.zIndex = String(10 + i);
-                    phones[i].style.pointerEvents = 'auto';
+                if (latest && latest.tag_name) {
+                    var tag = latest.tag_name;
+                    var verEl = document.getElementById('android-version');
+                    if (verEl) verEl.textContent = tag.charAt(0) === 'v' ? tag : 'v' + tag;
                 }
-            }
 
-            function renderMobile() {
-                var pw = phones[0].offsetWidth || 280;
-                var gap = 18;
-                var step = pw + gap;
-                for (var i = 0; i < n; i++) {
-                    var off = i - current;
-                    if (off > n / 2) off -= n;
-                    if (off < -n / 2) off += n;
-                    var a = Math.abs(off);
-                    var p = phones[i];
-                    if (a === 0) {
-                        p.style.transform = 'translate(0,0) scale(1)';
-                        p.style.opacity = '1';
-                        p.style.zIndex = '100';
-                        p.style.pointerEvents = 'auto';
-                    } else if (a === 1) {
-                        p.style.transform = 'translate(' + (off * step) + 'px,0) scale(1)';
-                        p.style.opacity = '0.55';
-                        p.style.zIndex = '90';
-                        p.style.pointerEvents = 'none';
-                    } else {
-                        p.style.transform = 'translate(' + (off * step) + 'px,0) scale(1)';
-                        p.style.opacity = '0';
-                        p.style.zIndex = '10';
-                        p.style.pointerEvents = 'none';
-                    }
+                var sizeEl = document.getElementById('dl-size');
+                if (sizeEl && latestApk && typeof latestApk.size === 'number') {
+                    sizeEl.textContent = (latestApk.size / 1048576).toFixed(1) + ' MB';
                 }
-            }
 
-            function render() {
-                if (mq.matches) renderMobile();
-                else if (expanded) renderGrid();
-                else renderStack();
-            }
+                var countEl = document.getElementById('dl-count');
+                if (countEl) countEl.textContent = formatCount(totalAndroid);
 
-            function go(idx) {
-                current = (idx % n + n) % n;
-                render();
-            }
+                var btn = document.getElementById('dl-btn');
+                if (btn && latestApk && latestApk.browser_download_url) {
+                    btn.href = latestApk.browser_download_url;
+                }
 
-            carousel.addEventListener('click', function (e) {
-                if (mq.matches) return;
-                if (!expanded) {
-                    expanded = true;
-                    render();
+            } catch (e) {}
+        };
+        xhr.send();
+    })();
+
+    (function () {
+        var carousel = document.getElementById('carousel');
+        if (!carousel) return;
+        var phones = Array.prototype.slice.call(carousel.querySelectorAll('.phone'));
+        var n = phones.length;
+        if (!n) return;
+        var current = 0;
+        var expanded = false;
+        var mq = window.matchMedia('(max-width:860px)');
+
+        function renderStack() {
+            for (var i = 0; i < n; i++) {
+                var depth = (i - current + n) % n;
+                var p = phones[i];
+                if (depth === 0) {
+                    p.style.transform = 'translate(0,0) scale(1)';
+                    p.style.opacity = '1';
+                    p.style.zIndex = '100';
+                    p.style.pointerEvents = 'auto';
+                } else if (depth <= 2) {
+                    var tx = depth * 16;
+                    var ty = -depth * 20;
+                    var sc = 1 - depth * 0.06;
+                    p.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+                    p.style.opacity = String(1 - depth * 0.28);
+                    p.style.zIndex = String(100 - depth * 10);
+                    p.style.pointerEvents = 'none';
                 } else {
-                    var ph = e.target.closest && e.target.closest('.phone');
-                    if (ph) {
-                        var idx = phones.indexOf(ph);
-                        if (idx > -1) current = idx;
-                    }
-                    expanded = false;
-                    render();
+                    p.style.transform = 'translate(40px,-50px) scale(0.8)';
+                    p.style.opacity = '0';
+                    p.style.zIndex = '10';
+                    p.style.pointerEvents = 'none';
                 }
-            });
-
-            var startX = null, startY = null, dragging = false, axis = null;
-            function down(x, y) { startX = x; startY = y; dragging = true; axis = null; }
-            function up(x) {
-                if (!dragging) return;
-                var dx = x - startX;
-                if (mq.matches && axis !== 'v' && Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
-                dragging = false; startX = null; startY = null; axis = null;
             }
-            carousel.addEventListener('touchstart', function (e) {
-                var t = e.touches[0]; down(t.clientX, t.clientY);
-            }, { passive: true });
-            carousel.addEventListener('touchmove', function (e) {
-                if (!dragging) return;
-                var t = e.touches[0];
-                var dx = t.clientX - startX, dy = t.clientY - startY;
-                if (axis === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
-                    axis = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+        }
+
+        function renderGrid() {
+            var cells = [[-83, -158], [83, -158], [-83, 158], [83, 158]];
+            var s = 0.528;
+            for (var i = 0; i < n; i++) {
+                var c = cells[i] || [0, 0];
+                phones[i].style.transform = 'translate(' + c[0] + 'px,' + c[1] + 'px) scale(' + s + ')';
+                phones[i].style.opacity = '1';
+                phones[i].style.zIndex = String(10 + i);
+                phones[i].style.pointerEvents = 'auto';
+            }
+        }
+
+        function renderMobile() {
+            var pw = phones[0].offsetWidth || 280;
+            var gap = 18;
+            var step = pw + gap;
+            for (var i = 0; i < n; i++) {
+                var off = i - current;
+                if (off > n / 2) off -= n;
+                if (off < -n / 2) off += n;
+                var a = Math.abs(off);
+                var p = phones[i];
+                if (a === 0) {
+                    p.style.transform = 'translate(0,0) scale(1)';
+                    p.style.opacity = '1';
+                    p.style.zIndex = '100';
+                    p.style.pointerEvents = 'auto';
+                } else if (a === 1) {
+                    p.style.transform = 'translate(' + (off * step) + 'px,0) scale(1)';
+                    p.style.opacity = '0.55';
+                    p.style.zIndex = '90';
+                    p.style.pointerEvents = 'none';
+                } else {
+                    p.style.transform = 'translate(' + (off * step) + 'px,0) scale(1)';
+                    p.style.opacity = '0';
+                    p.style.zIndex = '10';
+                    p.style.pointerEvents = 'none';
                 }
-                if (axis === 'h') e.preventDefault();
-            }, { passive: false });
-            carousel.addEventListener('touchend', function (e) { up(e.changedTouches[0].clientX); });
-            carousel.addEventListener('mousedown', function (e) {
-                down(e.clientX, e.clientY);
-                if (mq.matches) e.preventDefault();
-            });
-            window.addEventListener('mouseup', function (e) { if (dragging) up(e.clientX); });
+            }
+        }
 
-            window.addEventListener('resize', function () {
-                if (mq.matches) expanded = false;
-                render();
-            });
+        function render() {
+            if (mq.matches) renderMobile();
+            else if (expanded) renderGrid();
+            else renderStack();
+        }
 
+        function go(idx) {
+            current = (idx % n + n) % n;
             render();
-        })();
-    </script>
+        }
+
+        carousel.addEventListener('click', function (e) {
+            if (mq.matches) return;
+            if (!expanded) {
+                expanded = true;
+                render();
+            } else {
+                var ph = e.target.closest && e.target.closest('.phone');
+                if (ph) {
+                    var idx = phones.indexOf(ph);
+                    if (idx > -1) current = idx;
+                }
+                expanded = false;
+                render();
+            }
+        });
+
+        var startX = null, startY = null, dragging = false, axis = null;
+        function down(x, y) { startX = x; startY = y; dragging = true; axis = null; }
+        function up(x) {
+            if (!dragging) return;
+            var dx = x - startX;
+            if (mq.matches && axis !== 'v' && Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
+            dragging = false; startX = null; startY = null; axis = null;
+        }
+        carousel.addEventListener('touchstart', function (e) {
+            var t = e.touches[0]; down(t.clientX, t.clientY);
+        }, { passive: true });
+        carousel.addEventListener('touchmove', function (e) {
+            if (!dragging) return;
+            var t = e.touches[0];
+            var dx = t.clientX - startX, dy = t.clientY - startY;
+            if (axis === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+                axis = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+            }
+            if (axis === 'h') e.preventDefault();
+        }, { passive: false });
+        carousel.addEventListener('touchend', function (e) { up(e.changedTouches[0].clientX); });
+        carousel.addEventListener('mousedown', function (e) {
+            down(e.clientX, e.clientY);
+            if (mq.matches) e.preventDefault();
+        });
+        window.addEventListener('mouseup', function (e) { if (dragging) up(e.clientX); });
+
+        window.addEventListener('resize', function () {
+            if (mq.matches) expanded = false;
+            render();
+        });
+
+        render();
+    })();
+</script>
 </body>
 </html>
